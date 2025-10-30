@@ -82,6 +82,44 @@ app.post('/login', (req, res) => {
   res.send('Usuário ou senha incorretos!');
 });
 
+// Página de edição de post
+app.get('/admin/edit/:id', async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await Post.findByPk(postId);
+    if (!post) return res.status(404).send('Post não encontrado');
+
+    res.render('edit', { post });
+  } catch (err) {
+    console.error('Erro ao carregar post para edição:', err);
+    res.status(500).send('Erro ao carregar post');
+  }
+});
+
+// Atualiza o post no banco
+app.post('/admin/edit/:id', async (req, res) => {
+  const postId = req.params.id;
+  const { title, summary, content, image } = req.body;
+
+  try {
+    const post = await Post.findByPk(postId);
+    if (!post) return res.status(404).send('Post não encontrado');
+
+    await post.update({
+      title,
+      summary,
+      content,
+      image
+    });
+
+    console.log('✅ Post atualizado:', post.title);
+    res.redirect('/'); // ou res.redirect('/admin') se quiser voltar ao painel
+  } catch (err) {
+    console.error('Erro ao atualizar post:', err);
+    res.status(500).send('Erro ao atualizar post');
+  }
+});
 
 
 
