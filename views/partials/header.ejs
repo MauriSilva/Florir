@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title><%= titulo %></title>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+  window.addEventListener("scroll", function() {
+    const header = document.querySelector("header");
+    if (window.scrollY > 0) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+</head>
+<body>
+  <header>
+    <img src="img/florir-semdesc.png" alt="" style="width: 150x; height: 75px; float: left;">
+    <nav>
+      <a href="/">Início</a>
+      <a href="/artigos">Artigos Educativos</a>
+      <a href="/mapas">Mapas de saúde</a>
+      <a href="/forum">Comunidade</a>
+      <a href="/sobre">Quem somos</a>
+      <a href="/contato">Contato</a>
+      <a href="/login">Entrar</a>
+
+    </nav>
+  </header>
+

@@ -1,0 +1,45 @@
+<%- include("partials/hero") %>
+<%- include("partials/header") %>
+
+
+
+
+  <!-- Conteúdo -->
+  <main class="glass-container">
+  <section style="max-width: 70%;">
+    <h1>Bem-vinda(o) ao Florir</h2>
+      <p>Um espaço seguro e acolhedor para que você se sinta como a flor mais linda do jardim.</p>
+    <h2>Por que o Florir existe?</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat neque...</p>
+
+    <h2>Qual a nossa missão?</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis...</p>
+
+    <h2>Qual a nossa visão?</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad dolor mollitia...</p>
+  </section>
+
+  <section>
+    <h2 style="text-align: center;">Últimas postagens</h2>
+    <section id="posts-section">
+      <div class="posts-container">
+        <% if (posts.length > 0) { %>
+          <% posts.forEach(post => { %>
+            <div class="post-card">
+              <img src="<%= post.image %>" alt="<%= post.title %>">
+              <div class="post-info">
+                <h3><%= post.title %></h3>
+                <p><%= post.summary %></p>
+                <a href="/posts/<%= post.id %>">Ler mais</a>
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>Nenhum artigo disponível no momento.</p>
+        <% } %>
+      </div>
+    </section>
+  </section>
+</main>
+
+<%- include("partials/footer") %>

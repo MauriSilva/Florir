@@ -1,0 +1,23 @@
+<%- include("partials/header") %>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Florir</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login-container">
+    <h2>Área administrativa</h2>
+    <form action="/login" method="POST">
+      <label>Usuário:</label>
+      <input type="text" name="username" required>
+
+      <label>Senha:</label>
+      <input type="password" name="password" required>
+
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+</body>
+</html>

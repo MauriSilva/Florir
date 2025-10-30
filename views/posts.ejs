@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artigos - Florir</title>
+  <link rel="stylesheet" href="/styles/posts.css">
+</head>
+<body>
+
+  <header>
+    <h1>Artigos Florir 🌸</h1>
+  </header>
+
+  <main class="posts-container">
+    <% if (posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <div class="post-card">
+          <img src="<%= post.image %>" alt="<%= post.title %>">
+          <div class="post-info">
+            <h2><%= post.title %></h2>
+            <p><%= post.summary %></p>
+            <a href="/posts/<%= post.id %>">Ler mais</a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>Nenhum artigo disponível no momento.</p>
+    <% } %>
+  </main>
+
+</body>
+</html>
