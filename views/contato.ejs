@@ -1,17 +1,25 @@
-<%- include("layout") %>
+<%- include("partials/layout") %>
 <%- include("partials/header") %>
 
-<section>
-  <h2>Fale Conosco</h2>
+
+<main class="glass-container-contato">
+  
+<section class="faleConosco"> 
   <form>
+    <h2>Fale Conosco</h2>
     <label>Nome:</label>
     <input type="text" name="nome" required>
 
+    <label>Email:</label>
+    <textarea name="e-mail" required></textarea>
+
     <label>Mensagem:</label>
-    <textarea name="mensagem" required></textarea>
+    <textarea class="mensagem" name="mensagem" required></textarea>
 
     <button type="submit">Enviar</button>
   </form>
+  <img src="/img/FaleConosco.png" alt="">
 </section>
 
+</main>
 <%- include("partials/footer") %>

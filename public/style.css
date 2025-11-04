@@ -16,19 +16,6 @@ h1, h2, h3 {
   font-family: 'Poppins', sans-serif;
 }
 
-header {
-  background: linear-gradient(90deg, #6a0572, #ab3dcf);
-  color: white;
-  padding: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  transition: box-shadow 0.3s ease; /* animação suave */
-  height: 8vh;
-  align-content: center;
-  display:flex;
-  justify-content: space-between;
-}
 
 header nav{
   float: right;
@@ -68,11 +55,43 @@ footer {
   margin-top: 2rem;
 }
 
+.faleConosco{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faleConosco img{
+  min-width: 20vh;
+  min-width: 30vw;
+}
+
 form {
+  color: #fff;
+  float: left;
   display: flex;
   flex-direction: column;
-  max-width: 400px;
+  min-width: 500px;
   margin: auto;
+}
+
+.faleConosco button{
+  height: 2vh;
+  max-width: 30%;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.8em;
+  font-family: Inter;
+  background-color:#c393fd;
+  color: #fff;
+}
+
+.faleConosco h2{
+  font-size: 3em;
+}
+
+.mensagem{
+  height: 200px;
 }
 
 input, textarea {
@@ -296,7 +315,7 @@ section{
 
 /* Container de vidro */
 .glass-container {
-  background: white; /* leve transparência */
+  background: rgb(224, 224, 224); /* leve transparência */
   backdrop-filter: blur(10px); /* desfoque de fundo (a mágica do vidro!) */
   -webkit-backdrop-filter: blur(10px); /* compatibilidade Safari */
   border-radius: 20px;
@@ -308,6 +327,38 @@ section{
   color: #222;
 }
 
+.glass-container-contato {
+  background: #322553; /* leve transparência */
+  backdrop-filter: blur(10px); /* desfoque de fundo (a mágica do vidro!) */
+  -webkit-backdrop-filter: blur(10px); /* compatibilidade Safari */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  margin: 50px auto;
+  width: 80%;
+  color: #222;
+  min-height: 70vh;
+  min-width: 80vw;
+}
+
+.glass-container-login {
+  background: rgb(224, 224, 224); /* leve transparência */
+  backdrop-filter: blur(10px); /* desfoque de fundo (a mágica do vidro!) */
+  -webkit-backdrop-filter: blur(10px); /* compatibilidade Safari */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  margin: 50px auto;
+  width: 80%;
+  min-height: 70vh;
+  color: #222;
+  background-image: url("/img/imgLogin.jpg");
+  background-size:50% 100%;
+  background-repeat: no-repeat;
+}
+
 /* Ajuste de layout interno */
 .glass-container section {
   margin-bottom: 30px;
@@ -315,12 +366,12 @@ section{
 
 /* Textos */
 .glass-container h2 {
-  color: #e67ca3;
+  color: #e25388;
   margin-bottom: 10px;
 }
 
 .glass-container h1 {
-  color: #e67ca3;
+  color: #e25388;
   margin-bottom: 10px;
 }
 
@@ -330,3 +381,98 @@ section{
   font-size: 1.05rem;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: box-shadow 0.3s ease; /* animação suave */
+  height: 8vh;
+  align-content: center;
+  display:flex;
+  justify-content: space-between;
+}
+
+header img {
+  height: 60px;
+  margin-right: 40px;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: rgb(85, 15, 73);
+  text-decoration: none;
+  font-weight: 500;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  width: 40px; /* só mostra o ícone inicialmente */
+}
+
+nav a i {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* texto (escondido inicialmente) */
+nav a::after {
+  content: attr(data-text);
+  opacity: 0;
+  margin-left: 10px;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateX(10px);
+}
+
+/* efeito hover */
+nav a:hover {
+  width: 220px; /* expande pra mostrar o texto */
+}
+
+nav a:hover i {
+  transform: translateX(-10px);
+}
+
+nav a:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.section-login{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+    
+}
+.imagemLogin{
+ display: flex;
+ width: 50%;
+ height: 100%;
+border-right: 1px;
+}
+
+.loginContainer{
+ display: flex;
+ width: 50%;
+ height: 100%;
+border-right: 1px;
+}
+
+.login-container h2{
+  font-size: 2em;
+  color: #6a0572;
+}
