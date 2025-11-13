@@ -1,64 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Painel Admin - Florir</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      width: 400px;
-      background: #fff;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    input, textarea, button {
-      padding: 0.8rem;
-      border-radius: 0.5rem;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-    button {
-      background: #4CAF50;
-      color: white;
-      cursor: pointer;
-      border: none;
-      font-weight: bold;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #43A047;
-    }
-  </style>
-</head>
-<body>
-  <h1>Adicionar Novo Artigo</h1>
+<%- include("partials/layout") %>
+<%- include("partials/header") %>
 
-  <form action="/admin" method="POST">
-  <label>Título:</label>
-  <input type="text" name="title" required>
+  <main class="glass-container">
 
-  <label>Resumo:</label>
-  <input type="text" name="summary" required>
 
-  <label>Conteúdo:</label>
-  <textarea name="content" required></textarea>
+<h2>Painel de Administração</h2>
+<table class="admin-table">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Resumo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% posts.forEach(post => { %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.summary %></td>
+        <td>
+          <a href="/admin/edit/<%= post.id %>" class="btn-edit">Editar</a>
+          <form action="/admin/deletar/<%= post.id %>" method="POST" style="display:inline;">
+            <button type="submit" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir este post?');">Excluir</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
 
-  <label>Imagem (URL):</label>
-  <input type="text" name="image">
-
-  <button type="submit">Salvar</button>
-</form>
-
-</body>
-</html>
+</main>
+<%- include("partials/footer") %>

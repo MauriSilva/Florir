@@ -6,6 +6,16 @@ const port = 3000;
 const { sequelize, Post } = require("./models/postModel");
 
 
+function isAdmin(req, res, next) {
+  if (req.session && req.session.isAdmin) {
+    next();
+  } else {
+    res.redirect("/");
+  }
+}
+
+
+//carrega pelo menos 4 posts para exibir na sessao de leia mais
 app.use(async (req, res, next) => {
   try {
     const postsRecentes = await Post.findAll({
@@ -13,14 +23,13 @@ app.use(async (req, res, next) => {
       order: [["createdAt", "DESC"]],
     });
 
-    // Disponibiliza a variável 'postsRecentes' em todas as views
     res.locals.postsRecentes = postsRecentes;
   } catch (err) {
     console.error("Erro ao carregar posts recentes:", err);
     res.locals.postsRecentes = [];
   }
 
-  next(); // segue para a rota
+  next();
 });
 
 
@@ -42,17 +51,8 @@ app.use(bodyParser.json());
 
 // Banco de dados
 (async () => {
-  await sequelize.sync(); // não apaga os dados
+  await sequelize.sync();
 })();
-
-
-function checkAuth(req, res, next) {
-  if (req.session.user) {
-    return next();
-  }
-  res.redirect('/login', { titulo: "Sobre o Florir" });
-}
-
 
 
 // Rotas principais
@@ -88,11 +88,22 @@ app.get("/contato", (req, res) => {
 
 
 // Portal de administração
-app.get('/admin', checkAuth, (req, res) => {
-  res.render('admin', { titulo: "Sobre o Florir" });
+app.get('/admin', isAdmin,async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.render("admin", { posts, titulo:"Painel de administracao" });
+  } catch (error) {
+    console.error("Erro ao carregar o painel admin:", error);
+    res.status(500).send("Erro ao carregar o painel de administração.");
+  }
 });
 
-app.post('/admin', checkAuth, async (req, res) => {
+
+
+app.post('/admin', isAdmin , async (req, res) => {
   const { title, summary, content, image } = req.body;
 
   try {
@@ -145,7 +156,7 @@ app.get('/posts/:id', async (req, res) => {
 
 
 // Página de edição de post
-app.get('/admin/edit/:id', async (req, res) => {
+app.get('/admin/edit/:id', isAdmin, async (req, res) => {
   const postId = req.params.id;
 
   try {
@@ -160,7 +171,7 @@ app.get('/admin/edit/:id', async (req, res) => {
 });
 
 // Atualiza o post no banco
-app.post('/admin/edit/:id', async (req, res) => {
+app.post('/admin/edit/:id', isAdmin, async (req, res) => {
   const postId = req.params.id;
   const { title, summary, content, image } = req.body;
 
