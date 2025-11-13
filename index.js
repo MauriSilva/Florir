@@ -3,7 +3,26 @@ const bodyParser = require("body-parser");
 const app = express();
 const session = require('express-session');
 const port = 3000;
-const { sequelize, Post } = require("./models/postModel"); 
+const { sequelize, Post } = require("./models/postModel");
+
+
+app.use(async (req, res, next) => {
+  try {
+    const postsRecentes = await Post.findAll({
+      limit: 4,
+      order: [["createdAt", "DESC"]],
+    });
+
+    // Disponibiliza a variável 'postsRecentes' em todas as views
+    res.locals.postsRecentes = postsRecentes;
+  } catch (err) {
+    console.error("Erro ao carregar posts recentes:", err);
+    res.locals.postsRecentes = [];
+  }
+
+  next(); // segue para a rota
+});
+
 
 // Configurações básicas
 app.use(express.static("public"));
@@ -108,6 +127,21 @@ app.post('/login', (req, res) => {
 
 
 
+//render de posts individuais
+app.get('/posts/:id', async (req, res) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+
+    if (!post) {
+      return res.status(404).send('Post não encontrado.');
+    }
+
+    res.render('artigo', { post , titulo:"Artigos"});
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro ao buscar o post.');
+  }
+});
 
 
 // Página de edição de post
@@ -170,6 +204,8 @@ app.get('/logout', (req, res) => {
 app.get('/mapas', (req, res) => {
   res.render('mapas', { titulo: "Mapas Uteis" });
 });
+
+
 
 
 

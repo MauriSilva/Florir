@@ -13,18 +13,51 @@
       header.classList.remove("scrolled");
     }
   });
+
 </script>
 </head>
 <body>
   <header>
-    <a href="/"><img src="img/florir-semdesc.png" alt="" style="width: 150x; height: 75px; float: left; cursor: pointer;"></a>
-    <nav>
+    <a href="/"><img src="/img/florir-semdesc.png" alt="" style="width: auto; height: 75px; float: left; cursor: pointer;"></a>
+    <nav class="nav-links">
       <a href="/" data-text="Início"><i class="fa-solid fa-house" style="color: #5a114d;"></i> </a>
-      <a href="/artigos" data-text="Artigos Educativos"><i class="fa-solid fa-book" style="color: #5a114d;"></i>  </a>
+      <a href="/posts" data-text="Artigos Educativos"><i class="fa-solid fa-book" style="color: #5a114d;"></i>  </a>
       <a href="/mapas" data-text="Mapas de Saúde"><i class="fa-solid fa-map-location-dot" style="color: #5a114d;"></i>   </a>
       <a href="/forum" data-text="Comunidade"><i class="fa-solid fa-people-group" style="color: #5a114d;"></i> </a>
       <a href="/sobre" data-text="Quem somos"><i class="fa-solid fa-question" style="color: #5a114d;"></i>  </a>
       <a href="/contato" data-text="Contato"><i class="fa-solid fa-envelope" style="color: #5a114d;"></i> </a>
       <a href="/login" data-text="Entrar"><i class="fa-solid fa-arrow-right-to-bracket" style="color: #5a114d;"></i> </a>
     </nav>
+
+    <div class="menu-toggle" id="menu-toggle">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+
+  <script>
+    window.addEventListener("scroll", function() {
+      const header = document.querySelector("header");
+      if (window.scrollY > 0) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    });
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      menuToggle.innerHTML = navLinks.classList.contains('open')
+        ? '<i class="fa-solid fa-xmark"></i>'
+        : '<i class="fa-solid fa-bars"></i>';
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      });
+    });
+  </script>
   </header>

@@ -19,44 +19,11 @@ h3 {
 }
 
 
-header nav {
-  float: right;
-  align-content: center;
-}
-
-/* só aplica sombra quando rolar */
-header.scrolled {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.header-text {
-  float: left;
-}
-
-nav a {
-  margin: 0 1rem;
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  transition: 0.3s;
-}
-
-nav a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
 
 main {
   padding: 2rem;
 }
 
-footer {
-  background: #6a0572;
-  color: white;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
 
 .faleConosco {
   display: flex;
@@ -154,7 +121,7 @@ textarea {
 
 .logoHero img {
   display: flex;
-  padding-top: 20vh;
+  padding-top: 12vh;
   max-width: 45%;
   max-height: 10%;
 }
@@ -222,63 +189,9 @@ textarea {
 }
 
 
-@media (max-width: 1100px) {
-  .hero {
-    height: 50vh;
-    background: #8f6cba;
-    /* fundo suave */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    color: white;
-  }
 
-  .typing {
-    font-size: 20px;
-    border-right: 3px solid white;
-    /* cursor */
-    white-space: normal;
-    overflow: hidden;
-    display: inline-block;
-    width: auto;
-    /* começa escondido */
-    animation: blink 0.7s infinite;
-  }
 
-  .login-container {
-    max-width: 50%;
-  }
-
-  .login-container input {
-    max-width: 50%;
-    margin-left: 5%;
-  }
-
-  .login-container button {
-    max-width: 50%;
-    margin-left: 5%;
-  }
-
-  .login-container label {
-    max-width: 50%;
-    margin-left: 5%;
-  }
-
-  .checkbox {
-    text-align: justify;
-    max-width: 50%;
-    font-size: 15px;
-  }
-
-  .checkbox a {
-    text-align: justify;
-    max-width: 50%;
-    font-size: 15px;
-  }
-}
+/* =================================================POSTS============================================= */
 
 
 .posts-section {
@@ -345,44 +258,17 @@ textarea {
   text-decoration: none;
 }
 
-.particle,
-.sparkle {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.particle {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.sparkle {
-  background-color: rgba(255, 255, 255, 0.4);
-  width: 2px;
-  height: 2px;
-  animation: sparkleAnim 2s infinite;
-}
-
-@keyframes sparkleAnim {
-
-  0%,
-  100% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
 section {
   padding: 5vh;
 }
 
-/* Container de vidro */
+
+
+/* =================================================CONTAINERS============================================= */
+
+
+
 .glass-container {
   background: rgb(224, 224, 224);
   /* leve transparência */
@@ -459,6 +345,17 @@ section {
   font-size: 1.05rem;
 }
 
+
+
+/* ============================================HEADER=================================================== */
+
+
+
+header img {
+  height: 60px;
+  margin-right: 40px;
+}
+
 header {
   display: flex;
   align-items: center;
@@ -479,17 +376,12 @@ header {
   justify-content: space-between;
 }
 
-header img {
-  height: 60px;
-  margin-right: 40px;
-}
-
-nav {
+header nav {
   display: flex;
   gap: 20px;
 }
 
-nav a {
+header nav a {
   position: relative;
   display: flex;
   align-items: center;
@@ -499,16 +391,19 @@ nav a {
   overflow: hidden;
   transition: all 0.3s ease;
   width: 40px;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   /* só mostra o ícone inicialmente */
 }
 
-nav a i {
+header nav a i {
   font-size: 20px;
   transition: transform 0.3s ease;
 }
 
 /* texto (escondido inicialmente) */
-nav a::after {
+header nav a::after {
   content: attr(data-text);
   opacity: 0;
   margin-left: 10px;
@@ -518,19 +413,45 @@ nav a::after {
 }
 
 /* efeito hover */
-nav a:hover {
+header nav a:hover {
   width: 220px;
   /* expande pra mostrar o texto */
 }
 
-nav a:hover i {
+header nav a:hover i {
   transform: translateX(-10px);
 }
 
-nav a:hover::after {
+header nav a:hover::after {
   opacity: 1;
   transform: translateX(0);
 }
+
+header nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+header nav {
+  float: right;
+  align-content: center;
+}
+
+/* só aplica sombra quando rolar */
+header.scrolled {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header-text {
+  float: left;
+}
+
+.menu-toggle{
+  display: none;
+}
+
+/* ============================================LOGIN=================================================== */
+
+
 
 .section-login {
   display: flex;
@@ -587,4 +508,142 @@ nav a:hover::after {
   to {
     opacity: 1;
   }
+}
+
+
+
+
+/* ============================================FOOTER=================================================== */
+
+
+
+
+footer {
+  background: #6a0572;
+  color: white;
+  padding: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+footer li{
+  padding: 0.2em;
+}
+
+footer li a{
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  color: white;
+  text-decoration: none;
+  padding-bottom: 4px;
+}
+
+
+footer li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: white;
+  transition: width 0.4s ease;
+}
+
+footer li a:hover::after {
+  width: 100%;
+}
+
+
+
+/*================================================RESPONSIVIDADE===============================================*/
+
+
+@media (max-width: 1100px) {
+  .hero {
+    height: 50vh;
+    background: #8f6cba;
+    /* fundo suave */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    color: white;
+  }
+
+  .typing {
+    font-size: 20px;
+    border-right: 3px solid white;
+    /* cursor */
+    white-space: normal;
+    overflow: hidden;
+    display: inline-block;
+    width: auto;
+    /* começa escondido */
+    animation: blink 0.7s infinite;
+  }
+
+  .login-container {
+    max-width: 50%;
+  }
+
+  .login-container input {
+    max-width: 50%;
+    margin-left: 5%;
+  }
+
+  .login-container button {
+    max-width: 50%;
+    margin-left: 5%;
+  }
+
+  .login-container label {
+    max-width: 50%;
+    margin-left: 5%;
+  }
+
+  .checkbox {
+    text-align: justify;
+    max-width: 50%;
+    font-size: 15px;
+  }
+
+  .checkbox a {
+    text-align: justify;
+    max-width: 50%;
+    font-size: 15px;
+  }
+
+
+  .nav-links{
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 65%;
+    height: 100vh;
+    background:#c393fd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    transition: right 0.4s ease;
+    opacity: 0;
+  }
+
+    .nav-links.open {
+    right: 0;
+    opacity: 1;
+    animation: slideIn 0.5s ease forwards;
+  }
+  
+  .post-card{
+    width: 200px;
+  }
+
 }

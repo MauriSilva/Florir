@@ -1,0 +1,21 @@
+<%- include("partials/layout") %>
+<%- include("partials/header") %>
+
+<main class="post-detalhe">
+  <article>
+    <h1><%= post.title %></h1>
+    <% if (post.image) { %>
+      <img src="<%= post.image %>" alt="<%= post.title %>" style="max-width: 100%; border-radius: 10px;">
+    <% } %>
+    <p><%= post.content %></p>
+  </article>
+</main>
+
+
+<section class="leia-mais">
+  <h3>Veja também</h3>
+  <%- include("partials/posts", { posts: postsRecentes }) %>
+</section>
+
+
+<%- include("partials/footer") %>
