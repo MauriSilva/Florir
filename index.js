@@ -2,27 +2,42 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const session = require('express-session');
+const port = 3000;
+const { sequelize, Post } = require("./models/postModel"); 
 
+// Configurações básicas
+app.use(express.static("public"));
 app.use(session({
   secret: 'florir-secreto', // pode mudar para algo mais aleatório
   resave: false,
   saveUninitialized: false
 }));
-const port = 3000;
-const { sequelize, Post } = require("./models/postModel");
-
-// Configurações básicas
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
+
+
 
 // Banco de dados
 (async () => {
   await sequelize.sync(); // não apaga os dados
 })();
 
+
+function checkAuth(req, res, next) {
+  if (req.session.user) {
+    return next();
+  }
+  res.redirect('/login', { titulo: "Sobre o Florir" });
+}
+
+
+
 // Rotas principais
+//home
 app.get("/", async (req, res) => {
   try {
     const posts = await Post.findAll({ order: [["id", "DESC"]] });
@@ -33,20 +48,25 @@ app.get("/", async (req, res) => {
   }
 });
 
+
+
+
+//sobre
 app.get("/sobre", (req, res) => {
   res.render("sobre", { titulo: "Sobre o Florir" });
 });
 
+
+
+
+//contato
 app.get("/contato", (req, res) => {
   res.render("contato", { titulo: "Fale Conosco" });
 });
 
-function checkAuth(req, res, next) {
-  if (req.session.user) {
-    return next();
-  }
-  res.redirect('/login', { titulo: "Sobre o Florir" });
-}
+
+
+
 
 // Portal de administração
 app.get('/admin', checkAuth, (req, res) => {
@@ -66,8 +86,12 @@ app.post('/admin', checkAuth, async (req, res) => {
   }
 });
 
+
+
+
+// página de login
 app.get('/login', (req, res) => {
-  res.render('login', { titulo: "Sobre o Florir" }); // página de login
+  res.render('login', { titulo: "Sobre o Florir" }); 
 });
 
 app.post('/login', (req, res) => {
@@ -81,6 +105,10 @@ app.post('/login', (req, res) => {
 
   res.send('Usuário ou senha incorretos!');
 });
+
+
+
+
 
 // Página de edição de post
 app.get('/admin/edit/:id', async (req, res) => {
@@ -121,13 +149,29 @@ app.post('/admin/edit/:id', async (req, res) => {
   }
 });
 
+// página de termos de uso de dados
+app.get('/termos', (req, res) => {
+  res.render('termos', { titulo: "Termos de Uso e Política de Privacidade" }); 
+});
 
 
+
+
+//logout
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/login');
   });
 });
+
+
+
+//mapas
+app.get('/mapas', (req, res) => {
+  res.render('mapas', { titulo: "Mapas Uteis" });
+});
+
+
 
 
 // Iniciar servidor

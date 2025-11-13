@@ -4,20 +4,22 @@ body {
   font-family: 'Inter', sans-serif;
   margin: 0;
   color: white;
-   background: #c393fd;
-   font-size: 1.2em;
+  background: #c393fd;
+  font-size: 1.2em;
   /* background: linear-gradient(45deg, #f060cc 0%, #7b2ff7 50%, #d376eb 100%);
   background-size: 100% 300%;
   background-position: 0% 0%; */
-  
+
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: 'Poppins', sans-serif;
 }
 
 
-header nav{
+header nav {
   float: right;
   align-content: center;
 }
@@ -27,9 +29,10 @@ header.scrolled {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.header-text{
-    float: left;
+.header-text {
+  float: left;
 }
+
 nav a {
   margin: 0 1rem;
   color: white;
@@ -40,7 +43,7 @@ nav a {
 }
 
 nav a:hover {
- background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 main {
@@ -55,13 +58,13 @@ footer {
   margin-top: 2rem;
 }
 
-.faleConosco{
+.faleConosco {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.faleConosco img{
+.faleConosco img {
   min-width: 20vh;
   min-width: 30vw;
 }
@@ -75,26 +78,27 @@ form {
   margin: auto;
 }
 
-.faleConosco button{
+.faleConosco button {
   height: 2vh;
   max-width: 30%;
   border-radius: 10px;
   border: none;
   font-size: 0.8em;
   font-family: Inter;
-  background-color:#c393fd;
+  background-color: #c393fd;
   color: #fff;
 }
 
-.faleConosco h2{
+.faleConosco h2 {
   font-size: 3em;
 }
 
-.mensagem{
+.mensagem {
   height: 200px;
 }
 
-input, textarea {
+input,
+textarea {
   margin-bottom: 1rem;
   padding: 0.5rem;
   border-radius: 6px;
@@ -105,7 +109,8 @@ input, textarea {
 /* Hero ocupa a tela inteira */
 .hero {
   height: 100vh;
-  background: #8f6cba; /* fundo suave */
+  background: #8f6cba;
+  /* fundo suave */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,32 +126,37 @@ input, textarea {
 .hero-image {
   padding-right: 50%;
   position: absolute;
-  left: -100%; /* começa fora da tela */
+  left: -100%;
+  /* começa fora da tela */
   bottom: 0;
   width: 90%;
   height: 90%;
   background: url("/img/adolescente.png") no-repeat center bottom;
   background-size: contain;
   opacity: 0;
-  animation: slideIn 1.5s ease forwards 0.5s; /* entra suave */
+  animation: slideIn 1.5s ease forwards 0.5s;
+  /* entra suave */
 }
 
-.textHero{
+.textHero {
   display: flex;
-  float:left;
+  float: left;
   max-width: 40%;
-  white-space: normal; /* permite quebra automática */
-  overflow-wrap: break-word; /* garante quebra mesmo em palavras longas */
-  word-break: break-word; /* compatibilidade extra */
+  white-space: normal;
+  /* permite quebra automática */
+  overflow-wrap: break-word;
+  /* garante quebra mesmo em palavras longas */
+  word-break: break-word;
+  /* compatibilidade extra */
   line-height: 1.4;
 
 }
 
-.logoHero img{
+.logoHero img {
   display: flex;
-    padding-top: 20vh;
-    max-width: 45%;
-    max-height: 10%;
+  padding-top: 20vh;
+  max-width: 45%;
+  max-height: 10%;
 }
 
 /* Conteúdo de texto */
@@ -163,18 +173,22 @@ input, textarea {
 
 .typing {
   font-size: 3rem;
-  border-right: 3px solid white; /* cursor */
+  border-right: 3px solid white;
+  /* cursor */
   white-space: normal;
   word-wrap: break-word;
   overflow: hidden;
   display: inline-block;
-  width: auto; /* começa escondido */
+  width: auto;
+  /* começa escondido */
   animation: blink 0.7s infinite;
 }
 
 
 @keyframes blink {
-  50% { border-color: transparent; }
+  50% {
+    border-color: transparent;
+  }
 }
 
 /* .hero p {
@@ -188,6 +202,7 @@ input, textarea {
     left: -50%;
     opacity: 0;
   }
+
   to {
     left: 5%;
     opacity: 1;
@@ -195,32 +210,74 @@ input, textarea {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
 @media (max-width: 1100px) {
   .hero {
-  height: 50vh;
-  background: #8f6cba; /* fundo suave */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  color: white;
+    height: 50vh;
+    background: #8f6cba;
+    /* fundo suave */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    color: white;
   }
+
   .typing {
-  font-size: 20px;
-  border-right: 3px solid white; /* cursor */
-  white-space: normal;
-  overflow: hidden;
-  display: inline-block;
-  width: auto; /* começa escondido */
-  animation: blink 0.7s infinite;
-}
+    font-size: 20px;
+    border-right: 3px solid white;
+    /* cursor */
+    white-space: normal;
+    overflow: hidden;
+    display: inline-block;
+    width: auto;
+    /* começa escondido */
+    animation: blink 0.7s infinite;
+  }
+
+  .login-container {
+    max-width: 50%;
+  }
+
+  .login-container input {
+    max-width: 50%;
+    margin-left: 5%;
+  }
+
+  .login-container button {
+    max-width: 50%;
+    margin-left: 5%;
+  }
+
+  .login-container label {
+    max-width: 50%;
+    margin-left: 5%;
+  }
+
+  .checkbox {
+    text-align: justify;
+    max-width: 50%;
+    font-size: 15px;
+  }
+
+  .checkbox a {
+    text-align: justify;
+    max-width: 50%;
+    font-size: 15px;
+  }
 }
 
 
@@ -250,7 +307,7 @@ input, textarea {
   background: #fff;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform .2s ease;
   cursor: pointer;
 }
@@ -288,36 +345,51 @@ input, textarea {
   text-decoration: none;
 }
 
-.particle, .sparkle {
+.particle,
+.sparkle {
   position: fixed;
   border-radius: 50%;
   pointer-events: none;
   z-index: 5;
 }
 
-.particle { background-color: rgba(255,255,255,0.1); }
+.particle {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
 .sparkle {
-  background-color: rgba(255,255,255,0.4);
+  background-color: rgba(255, 255, 255, 0.4);
   width: 2px;
   height: 2px;
   animation: sparkleAnim 2s infinite;
 }
 
 @keyframes sparkleAnim {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 1; transform: scale(1); }
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-section{
+section {
   padding: 5vh;
 }
 
 /* Container de vidro */
 .glass-container {
-  background: rgb(224, 224, 224); /* leve transparência */
-  backdrop-filter: blur(10px); /* desfoque de fundo (a mágica do vidro!) */
-  -webkit-backdrop-filter: blur(10px); /* compatibilidade Safari */
+  background: rgb(224, 224, 224);
+  /* leve transparência */
+  backdrop-filter: blur(10px);
+  /* desfoque de fundo (a mágica do vidro!) */
+  -webkit-backdrop-filter: blur(10px);
+  /* compatibilidade Safari */
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -328,9 +400,12 @@ section{
 }
 
 .glass-container-contato {
-  background: #322553; /* leve transparência */
-  backdrop-filter: blur(10px); /* desfoque de fundo (a mágica do vidro!) */
-  -webkit-backdrop-filter: blur(10px); /* compatibilidade Safari */
+  background: #322553;
+  /* leve transparência */
+  backdrop-filter: blur(10px);
+  /* desfoque de fundo (a mágica do vidro!) */
+  -webkit-backdrop-filter: blur(10px);
+  /* compatibilidade Safari */
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
@@ -343,19 +418,22 @@ section{
 }
 
 .glass-container-login {
-  background: rgb(224, 224, 224); /* leve transparência */
-  backdrop-filter: blur(10px); /* desfoque de fundo (a mágica do vidro!) */
-  -webkit-backdrop-filter: blur(10px); /* compatibilidade Safari */
+  background: rgb(224, 224, 224);
+  /* leve transparência */
+  backdrop-filter: blur(10px);
+  /* desfoque de fundo (a mágica do vidro!) */
+  -webkit-backdrop-filter: blur(10px);
+  /* compatibilidade Safari */
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.26);
   padding: 40px;
   margin: 50px auto;
   width: 80%;
   min-height: 70vh;
   color: #222;
-  background-image: url("/img/imgLogin.jpg");
-  background-size:50% 100%;
+  background-image: url("/img/imgLogin.jpeg");
+  background-size: 50% 100%;
   background-repeat: no-repeat;
 }
 
@@ -388,15 +466,16 @@ header {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   padding: 10px 20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: box-shadow 0.3s ease; /* animação suave */
+  transition: box-shadow 0.3s ease;
+  /* animação suave */
   height: 8vh;
   align-content: center;
-  display:flex;
+  display: flex;
   justify-content: space-between;
 }
 
@@ -419,7 +498,8 @@ nav a {
   font-weight: 500;
   overflow: hidden;
   transition: all 0.3s ease;
-  width: 40px; /* só mostra o ícone inicialmente */
+  width: 40px;
+  /* só mostra o ícone inicialmente */
 }
 
 nav a i {
@@ -439,7 +519,8 @@ nav a::after {
 
 /* efeito hover */
 nav a:hover {
-  width: 220px; /* expande pra mostrar o texto */
+  width: 220px;
+  /* expande pra mostrar o texto */
 }
 
 nav a:hover i {
@@ -451,28 +532,59 @@ nav a:hover::after {
   transform: translateX(0);
 }
 
-.section-login{
-    display: flex;
-    justify-content: space-between;
-    box-sizing: border-box;
-    align-items: center;
-    
-}
-.imagemLogin{
- display: flex;
- width: 50%;
- height: 100%;
-border-right: 1px;
+.section-login {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+
 }
 
-.loginContainer{
- display: flex;
- width: 50%;
- height: 100%;
-border-right: 1px;
+.imagemLogin {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  border-right: 1px;
 }
 
-.login-container h2{
+.loginContainer {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  border-right: 1px;
+}
+
+.login-container h2 {
   font-size: 2em;
   color: #6a0572;
+}
+
+.map {
+  max-width: 60%;
+  max-height: 50%;
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  color: white;
+}
+
+#loader {
+  font-family: sans-serif;
+  animation: fade 0.3s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
