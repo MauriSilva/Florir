@@ -1,10 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-
-// Cria conexão com o banco local
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database/florir.db'
-});
+const sequelize = require("./database");
 
 // Define o modelo de Post
 const Post = sequelize.define('Post', {

@@ -3,17 +3,17 @@ const bodyParser = require("body-parser");
 const app = express();
 const session = require('express-session');
 const port = 3000;
-const { sequelize, Post } = require("./models/postModel");
-
+const bcrypt = require("bcrypt");
+const sequelize = require("./models/database");
+const { Post } = require("./models/postModel");
+const { User } = require("./models/userModel");
 
 function isAdmin(req, res, next) {
-  if (req.session && req.session.isAdmin) {
-    next();
-  } else {
-    res.redirect("/");
+  if (req.session && req.session.user && req.session.user.isAdmin) {
+    return next();
   }
+  return res.redirect("/login");
 }
-
 
 //carrega pelo menos 4 posts para exibir na sessao de leia mais
 app.use(async (req, res, next) => {
@@ -33,6 +33,8 @@ app.use(async (req, res, next) => {
 });
 
 
+
+
 // Configurações básicas
 app.use(express.static("public"));
 app.use(session({
@@ -45,15 +47,31 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  res.locals.isAdmin = req.session.isAdmin || false;
+  next();
+});
 
 
 
-
-// Banco de dados
+// sincroniza o banco de dados
 (async () => {
   await sequelize.sync();
-})();
 
+  // cria admin se nao existir
+  const adminExists = await User.findOne({ where: { username: "admin" } });
+
+  if (!adminExists) {
+    await User.create({
+      username: "admin",
+      password: "1234",   // será automaticamente criptografada
+      isAdmin: true
+    });
+
+    console.log("Usuário admin criado automaticamente.");
+  }
+})();
 
 // Rotas principais
 //home
@@ -124,18 +142,38 @@ app.get('/login', (req, res) => {
   res.render('login', { titulo: "Sobre o Florir" }); 
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
-  // login simples (só pra exemplo)
-  if (username === 'admin' && password === '1234') {
-    req.session.user = username; // cria sessão
+  try {
+    const user = await User.findOne({ where: { username } });
+
+    if (!user) {
+      return res.send("Usuário não encontrado.");
+    }
+
+    const passwdMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwdMatch) {
+      return res.send("Senha incorreta.");
+    }
+
+    req.session.user = {
+    username: user.username,
+    isAdmin: user.isAdmin
+    };
+
+    req.session.isAdmin = user.isAdmin;
+
+    console.log("Usuário logado:", user.username);
+
     return res.redirect('/admin');
+    
+  } catch (err) {
+    console.error("Erro no login:", err);
+    res.status(500).send("Erro interno no servidor.");
   }
-
-  res.send('Usuário ou senha incorretos!');
 });
-
 
 
 //render de posts individuais

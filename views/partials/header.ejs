@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title><%= titulo %></title>
-  <link rel="stylesheet" href="/style.css">
-  <script>
+<script>
   window.addEventListener("scroll", function() {
     const header = document.querySelector("header");
     if (window.scrollY > 0) {
@@ -15,7 +9,6 @@
   });
 
 </script>
-</head>
 <body>
   <header>
     <a href="/"><img src="/img/florir-semdesc.png" alt="" style="width: auto; height: 75px; float: left; cursor: pointer;"></a>
@@ -26,7 +19,19 @@
       <a href="/forum" data-text="Comunidade"><i class="fa-solid fa-people-group" style="color: #5a114d;"></i> </a>
       <a href="/sobre" data-text="Quem somos"><i class="fa-solid fa-question" style="color: #5a114d;"></i>  </a>
       <a href="/contato" data-text="Contato"><i class="fa-solid fa-envelope" style="color: #5a114d;"></i> </a>
-      <a href="/login" data-text="Entrar"><i class="fa-solid fa-arrow-right-to-bracket" style="color: #5a114d;"></i> </a>
+      <% if (user) { %>
+  <span><%= user.username %></span>
+  <a href="/logout">Sair</a>
+
+  <% if (user.isAdmin) { %>
+    <a href="/admin">Painel ADM</a>
+  <% } %>
+
+<% } else { %>
+  <a href="/login" data-text="Entrar">
+    <i class="fa-solid fa-arrow-right-to-bracket" style="color: #5a114d;"></i>
+  </a>
+<% } %>
     </nav>
 
     <div class="menu-toggle" id="menu-toggle">
