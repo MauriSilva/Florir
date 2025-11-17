@@ -106,13 +106,13 @@ app.get("/contato", (req, res) => {
 
 
 // Portal de administração
-app.get('/admin', isAdmin,async (req, res) => {
+app.get('/admin', isAdmin, async (req, res) => {
   try {
     const posts = await Post.findAll({
       order: [["createdAt", "DESC"]],
     });
 
-    res.render("admin", { posts, titulo:"Painel de administracao" });
+    res.render("admin", { posts, titulo: "Painel de administracao" });
   } catch (error) {
     console.error("Erro ao carregar o painel admin:", error);
     res.status(500).send("Erro ao carregar o painel de administração.");
@@ -121,7 +121,7 @@ app.get('/admin', isAdmin,async (req, res) => {
 
 
 
-app.post('/admin', isAdmin , async (req, res) => {
+app.post('/admin', isAdmin, async (req, res) => {
   const { title, summary, content, image } = req.body;
 
   try {
@@ -136,10 +136,43 @@ app.post('/admin', isAdmin , async (req, res) => {
 
 
 
+// página de cadastro
+app.get('/registrar', (req, res) => {
+  res.render('register', { titulo: "Criar Conta" });
+});
+
+app.post('/registrar', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // verifica se o username já existe
+    const userExists = await User.findOne({ where: { username } });
+
+    if (userExists) {
+      return res.send("Esse nome de usuário já está em uso.");
+    }
+
+    // cria o usuário — senha será hash automaticamente pelo hook
+    await User.create({
+      username,
+      password,   // NÃO HASH AQUI — seu model já faz isso automaticamente
+      isAdmin: false
+    });
+
+    console.log("Novo usuário criado:", username);
+
+    res.redirect('/login');
+
+  } catch (err) {
+    console.error("Erro ao cadastrar usuário:", err);
+    res.status(500).send("Erro ao criar usuário.");
+  }
+});
+
 
 // página de login
 app.get('/login', (req, res) => {
-  res.render('login', { titulo: "Sobre o Florir" }); 
+  res.render('login', { titulo: "Sobre o Florir" });
 });
 
 app.post('/login', async (req, res) => {
@@ -159,8 +192,8 @@ app.post('/login', async (req, res) => {
     }
 
     req.session.user = {
-    username: user.username,
-    isAdmin: user.isAdmin
+      username: user.username,
+      isAdmin: user.isAdmin
     };
 
     req.session.isAdmin = user.isAdmin;
@@ -168,7 +201,7 @@ app.post('/login', async (req, res) => {
     console.log("Usuário logado:", user.username);
 
     return res.redirect('/admin');
-    
+
   } catch (err) {
     console.error("Erro no login:", err);
     res.status(500).send("Erro interno no servidor.");
@@ -185,7 +218,7 @@ app.get('/posts/:id', async (req, res) => {
       return res.status(404).send('Post não encontrado.');
     }
 
-    res.render('artigo', { post , titulo:"Artigos"});
+    res.render('artigo', { post, titulo: "Artigos" });
   } catch (err) {
     console.error(err);
     res.status(500).send('Erro ao buscar o post.');
@@ -234,7 +267,7 @@ app.post('/admin/edit/:id', isAdmin, async (req, res) => {
 
 // página de termos de uso de dados
 app.get('/termos', (req, res) => {
-  res.render('termos', { titulo: "Termos de Uso e Política de Privacidade" }); 
+  res.render('termos', { titulo: "Termos de Uso e Política de Privacidade" });
 });
 
 
@@ -253,8 +286,6 @@ app.get('/logout', (req, res) => {
 app.get('/mapas', (req, res) => {
   res.render('mapas', { titulo: "Mapas Uteis" });
 });
-
-
 
 
 
