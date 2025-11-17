@@ -1,0 +1,47 @@
+<%- include("partials/layout") %>
+  <%- include("partials/header") %>
+
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+
+    <head>
+      <meta charset="UTF-8">
+      <title>Login - Florir</title>
+      <link rel="stylesheet" href="/css/style.css">
+    </head>
+
+
+
+    <body>
+      <main class="glass-container-login">
+        <section class="section-login">
+          <div class="imagemLogin">
+            <!-- <img src="/img/imgLogin.jpg" style="width: 100%;" alt=""> -->
+          </div>
+          <div class="login-container">
+            <h2 style="text-align: center;">Login</h2>
+            <form action="/login" method="POST">
+              <label>Usuário:</label>
+              <input type="text" name="username" required>
+
+              <label>Senha:</label>
+              <input type="password" name="password" required>
+
+              <div style="margin-top: 15px;" class="checkbox">
+                <label>
+                  <input type="checkbox" name="aceitoTermos" required>
+                  Eu li e concordo com os <a href="/termos" target="_blank">Termos de Uso e Política de Privacidade</a>.
+                </label>
+              </div>
+
+              <button type="submit">Entrar</button>
+
+            </form>
+          </div>
+
+        </section>
+      </main>
+
+    </body>
+
+    </html>

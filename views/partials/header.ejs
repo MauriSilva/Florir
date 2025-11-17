@@ -1,68 +1,88 @@
-<script>
-  window.addEventListener("scroll", function() {
-    const header = document.querySelector("header");
-    if (window.scrollY > 0) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  });
-
-</script>
 <body>
-  <header>
-    <a href="/"><img src="/img/florir-semdesc.png" alt="" style="width: auto; height: 75px; float: left; cursor: pointer;"></a>
-    <nav class="nav-links">
-      <a href="/" data-text="Início"><i class="fa-solid fa-house" style="color: #5a114d;"></i> </a>
-      <a href="/posts" data-text="Artigos Educativos"><i class="fa-solid fa-book" style="color: #5a114d;"></i>  </a>
-      <a href="/mapas" data-text="Mapas de Saúde"><i class="fa-solid fa-map-location-dot" style="color: #5a114d;"></i>   </a>
-      <a href="/forum" data-text="Comunidade"><i class="fa-solid fa-people-group" style="color: #5a114d;"></i> </a>
-      <a href="/sobre" data-text="Quem somos"><i class="fa-solid fa-question" style="color: #5a114d;"></i>  </a>
-      <a href="/contato" data-text="Contato"><i class="fa-solid fa-envelope" style="color: #5a114d;"></i> </a>
-      <% if (user) { %>
-  <span><%= user.username %></span>
-  <a href="/logout">Sair</a>
-
-  <% if (user.isAdmin) { %>
-    <a href="/admin">Painel ADM</a>
-  <% } %>
-
-<% } else { %>
-  <a href="/login" data-text="Entrar">
-    <i class="fa-solid fa-arrow-right-to-bracket" style="color: #5a114d;"></i>
+<header>
+  <!-- LOGO -->
+  <a href="/">
+    <img src="/img/florir-semdesc.png" alt="" style="width: auto; height: 50px; cursor: pointer;">
   </a>
-<% } %>
-    </nav>
 
-    <div class="menu-toggle" id="menu-toggle">
-    <i class="fa-solid fa-bars"></i>
+  <!-- BOTÃO HAMBÚRGUER (vem antes do nav!) -->
+  <div class="menu-toggle" id="menu-toggle">
+    <i class="fa-solid fa-bars" style="color: #fff;"></i>
   </div>
 
-  <script>
-    window.addEventListener("scroll", function() {
-      const header = document.querySelector("header");
-      if (window.scrollY > 0) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
-    });
+  <!-- MENU -->
+  <nav class="nav-links">
+    <a href="/" data-text="Início"><i class="fa-solid fa-house"></i></a>
+    <a href="/posts" data-text="Artigos Educativos"><i class="fa-solid fa-book"></i></a>
+    <a href="/mapas" data-text="Mapas de Saúde"><i class="fa-solid fa-map-location-dot"></i></a>
+    <a href="/forum" data-text="Comunidade"><i class="fa-solid fa-people-group"></i></a>
+    <a href="/sobre" data-text="Quem somos"><i class="fa-solid fa-question"></i></a>
+    <a href="/contato" data-text="Contato"><i class="fa-solid fa-envelope"></i></a>
 
-    const menuToggle = document.getElementById('menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    <% if (user) { %>
+      <div class="nav-user">
+        <span><%= user.username %></span>
+        <a href="/logout" data-text="Sair"></a>
 
+        <% if (user.isAdmin) { %>
+          <a href="/admin" data-text="Painel ADM"></a>
+        <% } %>
+      </div>
+    <% } else { %>
+      <a href="/login" data-text="Entrar">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+      </a>
+    <% } %>
+  </nav>
+
+<script>
+/* Florir - header + menu behavior */
+(function(){
+  const header = document.querySelector('header');
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  const MOBILE_BREAKPOINT = 1100;
+
+
+
+  // Scroll: toggle scrolled class
+  function onScroll(){
+    if(window.scrollY > 0) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+
+  // Menu toggle (open / close slide)
+  if(menuToggle && navLinks){
     menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('open');
-      menuToggle.innerHTML = navLinks.classList.contains('open')
-        ? '<i class="fa-solid fa-xmark"></i>'
-        : '<i class="fa-solid fa-bars"></i>';
+      const open = navLinks.classList.contains('open');
+      menuToggle.innerHTML = open ? '<i class=\"fa-solid fa-xmark\"></i>' : '<i class=\"fa-solid fa-bars\"></i>';
+      document.body.style.overflow = open ? 'hidden' : ''; // prevent body scroll when menu open
     });
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    // close menu when any link clicked (good for SPA + normal)
+    navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');
-        menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        menuToggle.innerHTML = '<i class=\"fa-solid fa-bars\"></i>';
+        document.body.style.overflow = '';
       });
     });
-  </script>
+
+    // ensure menu closes if viewport resized to desktop
+    window.addEventListener('resize', () => {
+      if(window.innerWidth >= MOBILE_BREAKPOINT && navLinks.classList.contains('open')){
+        navLinks.classList.remove('open');
+        menuToggle.innerHTML = '<i class=\"fa-solid fa-bars\"></i>';
+        document.body.style.overflow = '';
+      }
+    }, { passive:true });
+  }
+})();
+</script>
+
+
   </header>
