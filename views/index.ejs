@@ -1,43 +1,165 @@
 <%- include("partials/layout") %>
-<%- include("partials/hero") %>
-<%- include("partials/header") %>
+  <%- include("partials/hero") %>
+    <%- include("partials/header") %>
+
+      <main class="glass-container">
+
+        <!-- SEÇÃO DE APRESENTAÇÃO -->
+        <section style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <h1>Bem-vinda(o) ao Florir 🌸</h1>
+          <p>
+            Um espaço acolhedor criado especialmente para apoiar adolescentes grávidas,
+            oferecendo informação, apoio, e ferramentas para que você possa florescer com segurança.
+          </p>
+
+          <h2>Por que o Florir existe?</h2>
+          <p>
+            Nosso propósito é facilitar o acesso à saúde, conhecimento e comunidade.
+            Aqui você encontra orientação confiável, suporte emocional e serviços próximos.
+          </p>
+
+          <h2>Nossa missão</h2>
+          <p>
+            Tornar a maternidade mais leve, humana e segura por meio da informação e do cuidado.
+          </p>
+
+          <h2>Nossa visão</h2>
+          <p>
+            Ser uma rede de apoio digital que transforma vidas e conecta pessoas a recursos essenciais.
+          </p>
+        </section>
 
 
+        <!-- SEÇÃO COMO O FLORIR AJUDA -->
+        <section style="margin-top: 60px;">
+          <h2 style="text-align: center;">Como o Florir pode te ajudar?</h2>
 
-  <!-- Conteúdo -->
-  <main class="glass-container">
-  <section style="max-width: 70%;">
-    <h1>Bem-vinda(o) ao Florir</h2>
-      <p>Um espaço seguro e acolhedor para que você se sinta como a flor mais linda do jardim.</p>
-    <h2>Por que o Florir existe?</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat neque...</p>
+          <div style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    ">
 
-    <h2>Qual a nossa missão?</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis...</p>
-
-    <h2>Qual a nossa visão?</h2>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad dolor mollitia...</p>
-  </section>
-
-    <h2 style="text-align: center;">Últimas postagens</h2>
-    <section id="posts-section">
-      <div class="posts-container">
-        <% if (posts.length > 0) { %>
-          <% posts.forEach(post => { %>
-            <div class="post-card">
-              <img src="<%= post.image %>" alt="<%= post.title %>">
-              <div class="post-info">
-                <h3><%= post.title %></h3>
-                <p><%= post.summary %></p>
-                <a href="/posts/<%= post.id %>">Ler mais</a>
-              </div>
+            <!-- Card 1 -->
+            <div class="post-card" style="padding: 20px; text-align: center;">
+              <i class="fa-solid fa-map-location-dot" style="font-size: 36px; color: var(--brand-purple);"></i>
+              <h3>Serviços de Saúde</h3>
+              <p>Encontre hospitais, clínicas, farmácias e ONGs perto de você.</p>
             </div>
-          <% }) %>
-        <% } else { %>
-          <p>Nenhum artigo disponível no momento.</p>
-        <% } %>
-      </div>
-    </section>
-</main>
 
-<%- include("partials/footer") %>
+            <!-- Card 2 -->
+            <div class="post-card" style="padding: 20px; text-align: center;">
+              <i class="fa-solid fa-book" style="font-size: 36px; color: var(--brand-purple);"></i>
+              <h3>Artigos Educativos</h3>
+              <p>Conteúdos escritos com cuidado para informar e acolher.</p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="post-card" style="padding: 20px; text-align: center;">
+              <i class="fa-solid fa-people-group" style="font-size: 36px; color: var(--brand-purple);"></i>
+              <h3>Comunidade Segura</h3>
+              <p>Um espaço para conversar, desabafar e aprender com outras jovens.</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="post-card" style="padding: 20px; text-align: center;">
+              <i class="fa-solid fa-location-dot" style="font-size: 36px; color: var(--brand-purple);"></i>
+              <h3>Localização Inteligente</h3>
+              <p>Mostramos serviços próximos sem salvar sua localização.</p>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- SEÇÃO DESTAQUE DO MAPA -->
+        <section style="margin-top: 60px; text-align: center;">
+          <h2>Mapa de Saúde e ONGs</h2>
+          <p>
+            Encontre serviços essenciais próximos da sua região: hospitais, clínicas, farmácias e ONGs.
+          </p>
+          <a href="/mapas" class="btn" style="margin-top: 10px; display: inline-block;">Acessar o Mapa</a>
+        </section>
+
+
+        <!-- SEÇÃO ÚLTIMAS POSTAGENS -->
+        <section id="posts-section" style="margin-top: 60px;">
+          <h2 style="text-align: center;">Últimas Postagens</h2>
+
+          <div class="posts-container">
+            <% if (posts.length> 0) { %>
+              <% posts.forEach(post=> { %>
+                <div class="post-card">
+                  <img src="<%= post.image %>" alt="<%= post.title %>">
+                  <div class="post-info">
+                    <h3>
+                      <%= post.title %>
+                    </h3>
+                    <p>
+                      <%= post.summary %>
+                    </p>
+                    <a href="/posts/<%= post.id %>">Ler mais</a>
+                  </div>
+                </div>
+                <% }) %>
+                  <% } else { %>
+                    <p style="text-align: center;">Nenhum artigo disponível no momento.</p>
+                    <% } %>
+          </div>
+
+          <div style="text-align: center; margin-top: 20px;">
+            <a href="/posts" class="btn">Ver todos os artigos</a>
+          </div>
+        </section>
+
+
+        <!-- SEÇÃO DEPOIMENTOS -->
+        <section style="margin-top: 80px;">
+          <h2 style="text-align: center;">Depoimentos</h2>
+
+          <div style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 30px;
+    ">
+
+            <div class="post-card" style="padding: 20px;">
+              <p>
+                “O Florir me ajudou a encontrar serviços perto da minha casa. Salvou meu pré-natal!”
+              </p>
+              <strong>— Maria, 16 anos</strong>
+            </div>
+
+            <div class="post-card" style="padding: 20px;">
+              <p>
+                “Achei conteúdos que me ajudaram com minhas dúvidas e me senti acolhida.”
+              </p>
+              <strong>— Júlia, 17 anos</strong>
+            </div>
+
+            <div class="post-card" style="padding: 20px;">
+              <p>
+                “A comunidade é maravilhosa. Me senti menos sozinha.”
+              </p>
+              <strong>— Ana, 15 anos</strong>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- CTA FINAL -->
+        <section style="margin-top: 80px; text-align: center;">
+          <h2>🌼 Pronta para florescer com a gente?</h2>
+          <p>
+            Aqui você encontra apoio, informação, e um espaço seguro para sua jornada.
+          </p>
+
+          <a href="/login" class="btn" style="margin-top: 15px;">Entrar no Florir</a>
+        </section>
+
+      </main>
+
+      <%- include("partials/footer") %>
