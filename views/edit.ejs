@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editar Post</title>
-  <style>
+  <!-- <style>
 
     body {
   font-family: "Poppins", sans-serif;
@@ -64,7 +64,7 @@
 }
 
 
-  </style>
+  </style> -->
 </head>
 <body>
   <div class="admin-container">
@@ -80,6 +80,9 @@
       <label for="content">Conteúdo</label>
       <textarea id="content" name="content" rows="6" required><%= post.content %></textarea>
 
+      <label for="category">Categoria</label>
+      <input type="text" id="category" name="category" value="<%= post.category %>">
+
       <label for="image">URL da Imagem</label>
       <input type="text" id="image" name="image" value="<%= post.image %>" placeholder="https://...">
 
@@ -87,6 +90,25 @@
     </form>
 
     <a href="/" class="back-link">← Voltar</a>
+
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+<script>
+  const easyMDE = new EasyMDE({
+    element: document.getElementById('content'),
+    spellChecker: false,
+    autosave: {
+      enabled: true,
+      uniqueId: "post-editor",
+      delay: 1000
+    },
+    placeholder: "Escreva seu artigo aqui usando Markdown...",
+    sideBySideFullscreen: true,
+    tabSize: 2,
+  });
+</script>
+
   </div>
 </body>
 </html>

@@ -7,6 +7,9 @@ const bcrypt = require("bcrypt");
 const sequelize = require("./models/database");
 const { Post } = require("./models/postModel");
 const { User } = require("./models/userModel");
+const { Comment } = require("./models/commentModel");
+const { marked } = require("marked");
+const nodemailer = require("nodemailer");
 
 function isAdmin(req, res, next) {
   if (req.session && req.session.user && req.session.user.isAdmin) {
@@ -32,7 +35,11 @@ app.use(async (req, res, next) => {
   next();
 });
 
-
+//garente que todas as paginas sempre tenham um Titulo e evita o erro de referencia
+app.use((req, res, next) => {
+  res.locals.titulo = "Florir";
+  next();
+});
 
 
 // Configurações básicas
@@ -58,6 +65,7 @@ app.use((req, res, next) => {
 // sincroniza o banco de dados
 (async () => {
   await sequelize.sync();
+  await Comment.sync();
 
   // cria admin se nao existir
   const adminExists = await User.findOne({ where: { username: "admin" } });
@@ -85,8 +93,27 @@ app.get("/", async (req, res) => {
   }
 });
 
+// Forum / comunidade
+app.get("/comunidade", async (req, res) => {
+  const comments = await Comment.findAll({
+    order: [["createdAt", "DESC"]]
+  });
 
+  res.render("comunidade", {
+    titulo: "Comunidade – Florir",
+    comments
+  });
+});
 
+app.post("/comunidade", async (req, res) => {
+  const { name, message } = req.body;
+
+  if (!name || !message) return res.redirect("/comunidade");
+
+  await Comment.create({ name, message });
+
+  res.redirect("/comunidade");
+});
 
 //sobre
 app.get("/sobre", (req, res) => {
@@ -98,10 +125,48 @@ app.get("/sobre", (req, res) => {
 
 //contato
 app.get("/contato", (req, res) => {
-  res.render("contato", { titulo: "Fale Conosco" });
+  res.render("contato", {
+    titulo: "Fale Conosco",
+    enviado: req.query.enviado || null   // <-- enviando variável para o EJS
+  });
 });
 
+// ROTA PARA PROCESSAR ENVIO DE EMAIL
+app.post("/contato", async (req, res) => {
+  const { nome, email, mensagem } = req.body;
 
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "projetoflorirfmu@gmail.com",
+        pass: "wsob exxh cfur serm"
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+
+    await transporter.sendMail({
+      from: email,
+      to: "projetoflorirfmu@gmail.com",
+      subject: `Nova mensagem do Florir - Enviado por ${nome}`,
+      text: `
+        Nome: ${nome}
+        Email: ${email}
+        Mensagem:
+        ${mensagem}
+      `
+    });
+
+    console.log("📨 E-mail enviado com sucesso!");
+    res.redirect("/contato?enviado=1");
+
+  } catch (error) {
+    console.error("❌ ERRO:", error);
+    res.send("Ocorreu um erro ao enviar sua mensagem.");
+  }
+});
 
 
 
@@ -118,14 +183,17 @@ app.get('/admin', isAdmin, async (req, res) => {
     res.status(500).send("Erro ao carregar o painel de administração.");
   }
 });
-
-
-
 app.post('/admin', isAdmin, async (req, res) => {
-  const { title, summary, content, image } = req.body;
+  const { title, summary, content, image, category } = req.body;
 
   try {
-    await Post.create({ title, summary, content, image: image || '/default.jpg' });
+    await Post.create({
+      title,
+      summary,
+      content,
+      category: category.trim().toLowerCase(),
+      image: image || '/default.jpg'
+});
     console.log("Novo artigo adicionado:", title);
     res.redirect('/');
   } catch (err) {
@@ -134,11 +202,43 @@ app.post('/admin', isAdmin, async (req, res) => {
   }
 });
 
+//criar posts
+app.get("/admin/create", isAdmin, (req, res) => {
+  res.render("admin-create", { titulo: "Criar Novo Post" });
+});
 
+app.post("/admin/create", isAdmin, async (req, res) => {
+  const { title, summary, content, category, image } = req.body;
+
+  try {
+    await Post.create({
+      title,
+      summary,
+      content,
+      category: category.trim().toLowerCase(),
+      image: image || '/default.jpg'
+    });
+
+    res.redirect("/admin");
+  } catch (err) {
+    console.error("Erro ao criar post:", err);
+    res.status(500).send("Erro ao criar post.");
+  }
+});
+
+app.post("/comunidade/deletar/:id", isAdmin, async (req, res) => {
+  try {
+    await Comment.destroy({ where: { id: req.params.id } });
+    res.redirect("/comunidade");
+  } catch (err) {
+    console.error("Erro ao deletar comentário:", err);
+    res.status(500).send("Erro ao deletar comentário.");
+  }
+});
 
 // página de cadastro
 app.get('/registrar', (req, res) => {
-  res.render('register', { titulo: "Criar Conta" });
+  res.render('registrar', { titulo: "Criar Conta" });
 });
 
 app.post('/registrar', async (req, res) => {
@@ -200,7 +300,7 @@ app.post('/login', async (req, res) => {
 
     console.log("Usuário logado:", user.username);
 
-    return res.redirect('/admin');
+    return res.redirect('/');
 
   } catch (err) {
     console.error("Erro no login:", err);
@@ -209,19 +309,24 @@ app.post('/login', async (req, res) => {
 });
 
 
-//render de posts individuais
+//render de posts individuais. usa markdown
 app.get('/posts/:id', async (req, res) => {
   try {
     const post = await Post.findByPk(req.params.id);
 
-    if (!post) {
-      return res.status(404).send('Post não encontrado.');
-    }
+    if (!post) return res.status(404).send("Post não encontrado");
 
-    res.render('artigo', { post, titulo: "Artigos" });
+    const htmlContent = marked.parse(post.content);
+
+    res.render('artigo', { 
+      post,
+      htmlContent,
+      titulo: post.title
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Erro ao buscar o post.');
+    console.error("Erro ao carregar post:", err);
+    res.status(500).send("Erro ao carregar o post");
   }
 });
 
@@ -244,18 +349,19 @@ app.get('/admin/edit/:id', isAdmin, async (req, res) => {
 // Atualiza o post no banco
 app.post('/admin/edit/:id', isAdmin, async (req, res) => {
   const postId = req.params.id;
-  const { title, summary, content, image } = req.body;
+  const { title, summary, content, image, category } = req.body;
 
   try {
     const post = await Post.findByPk(postId);
     if (!post) return res.status(404).send('Post não encontrado');
 
     await post.update({
-      title,
-      summary,
-      content,
-      image
-    });
+  title,
+  summary,
+  content,
+  image,
+  category
+});
 
     console.log('✅ Post atualizado:', post.title);
     res.redirect('/'); // ou res.redirect('/admin') se quiser voltar ao painel
@@ -276,7 +382,7 @@ app.get('/termos', (req, res) => {
 //logout
 app.get('/logout', (req, res) => {
   req.session.destroy(() => {
-    res.redirect('/login');
+    res.redirect('/');
   });
 });
 
@@ -287,6 +393,35 @@ app.get('/mapas', (req, res) => {
   res.render('mapas', { titulo: "Mapas Uteis" });
 });
 
+
+// Página de Conteúdos Educativos
+app.get("/conteudo", async (req, res) => {
+  const categoria = req.query.categoria || null;
+
+  try {
+    const posts = await Post.findAll();
+
+    // pegar categorias únicas com base no summary
+    const categorias = [...new Set(posts.map(p => p.category.trim()))];
+
+    let postsFiltrados = posts;
+
+   if (categoria) {
+  postsFiltrados = posts.filter(p => p.category.trim() === categoria);
+}
+
+    res.render("conteudo", {
+      posts: postsFiltrados,
+      categorias,
+      categoriaSelecionada: categoria,
+      titulo: "Conteúdos Educativos"
+    });
+
+  } catch (err) {
+    console.error("Erro ao carregar conteúdos:", err);
+    res.status(500).send("Erro ao carregar conteúdos.");
+  }
+});
 
 
 

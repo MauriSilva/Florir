@@ -18,6 +18,12 @@ const Post = sequelize.define('Post', {
   image: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+
+  category: {                        // <-- ADICIONAR
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "geral"
   }
 });
 

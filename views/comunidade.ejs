@@ -1,0 +1,83 @@
+<%- include("partials/layout") %>
+<%- include("partials/header") %>
+
+<main class="glass-container">
+
+  <h1>🌼 Comunidade Florir</h1>
+  <p>Aqui você encontra contatos importantes e pode deixar sua mensagem para o projeto.</p>
+
+  <!-- CONTATOS ÚTEIS -->
+  <section>
+    <h2>📞 Contatos de Apoio Emocional</h2>
+
+    <div class="contact-list">
+
+      <div class="contact-card">
+        <h3>CVV – 188</h3>
+        <p>Atendimento gratuito e sigiloso 24h.</p>
+        <a href="https://www.cvv.org.br" target="_blank">Acessar site</a>
+      </div>
+
+      <div class="contact-card">
+        <h3>SAMU – 192</h3>
+        <p>Emergências médicas.</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Disque Saúde – 136</h3>
+        <p>Informações sobre serviços de saúde pública.</p>
+      </div>
+
+      <div class="contact-card">
+        <h3>Mapa da Saúde Florir</h3>
+        <p>Encontre hospitais, clínicas e ONGs perto de você.</p>
+        <a href="/mapas">Abrir mapa</a>
+      </div>
+
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- COMENTÁRIOS -->
+  <section>
+    <h2>💬 Deixe seu comentário</h2>
+
+    <form action="/comunidade" method="POST">
+      <label>Seu nome:</label>
+      <input type="text" name="name" required>
+
+      <label>Sua mensagem:</label>
+      <textarea name="message" required></textarea>
+
+      <button type="submit">Enviar comentário</button>
+    </form>
+
+    <h3 class="mt-1">Comentários da Comunidade</h3>
+
+    <% if (comments.length === 0) { %>
+      <p>Nenhum comentário ainda. Seja o primeiro a participar!</p>
+    <% } %>
+
+    <% comments.forEach(c => { %>
+  <div class="comment-card">
+    <strong><%= c.name %></strong>
+    <p><%= c.message %></p>
+    <small><%= c.createdAt.toLocaleString("pt-BR") %></small>
+
+    <% if (user && user.isAdmin) { %>
+      <form action="/comunidade/deletar/<%= c.id %>" method="POST" style="margin-top: 10px;">
+        <button class="btn-delete-comment" onclick="return confirm('Excluir este comentário?')">
+          Excluir
+        </button>
+      </form>
+    <% } %>
+
+  </div>
+<% }) %>
+
+  </section>
+
+</main>
+
+<%- include("partials/footer") %>

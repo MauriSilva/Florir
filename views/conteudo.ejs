@@ -1,0 +1,50 @@
+<%- include("partials/layout") %>
+<%- include("partials/header") %>
+
+<main class="glass-container">
+
+  <h1 style="text-align:center;">📚 Conteúdos Educativos</h1>
+  <p style="text-align:center; color:#444; margin-bottom: 30px;">
+    Explore nossos artigos organizados por tema.
+  </p>
+
+  <!-- FILTROS DE CATEGORIA -->
+  <div class="categorias-container">
+    <% categorias.forEach(cat => { %>
+      <a href="?categoria=<%= cat %>" 
+         class="categoria-tag <%= categoriaSelecionada === cat ? 'ativa' : '' %>">
+        <%= cat %>
+      </a>
+    <% }) %>
+
+    <a href="/conteudo" 
+       class="categoria-tag <%= !categoriaSelecionada ? 'ativa' : '' %>">
+      Todas
+    </a>
+  </div>
+
+  <!-- LISTAGEM DOS POSTS -->
+  <section class="posts-container" style="margin-top:20px;">
+    <% if (posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <div class="post-card">
+          <% if (post.image) { %>
+            <img src="<%= post.image %>" alt="<%= post.title %>">
+          <% } %>
+          <div class="post-info">
+            <h3><%= post.title %></h3>
+            <p><%= post.summary %></p>
+            <a href="/posts/<%= post.id %>">Ler mais</a>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p style="text-align:center; margin-top:20px;">
+        Nenhum conteúdo encontrado para esta categoria.
+      </p>
+    <% } %>
+  </section>
+
+</main>
+
+<%- include("partials/footer") %>

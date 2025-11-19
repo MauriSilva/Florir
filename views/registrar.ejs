@@ -1,16 +1,14 @@
 <%- include("partials/layout") %>
-  <%- include("partials/header") %>
+<%- include("partials/header") %>
 
     <!DOCTYPE html>
     <html lang="pt-BR">
 
     <head>
       <meta charset="UTF-8">
-      <title>Login - Florir</title>
+      <title>Registre-se - Florir</title>
       <link rel="stylesheet" href="/css/style.css">
     </head>
-
-
 
     <body>
       <main class="glass-container-login">
@@ -20,7 +18,7 @@
           </div>
           <div class="login-container">
             <h2 style="text-align: center;">Login</h2>
-            <form action="/login" method="POST">
+            <form action="/registrar" method="POST">
               <label>Usuário:</label>
               <input type="text" name="username" required>
 
@@ -34,14 +32,14 @@
                 </label>
               </div>
 
-              <button type="submit">Entrar</button>
+              <button type="submit">Registrar</button>
 
             </form>
           </div>
 
         </section>
       </main>
-
+<%- include("partials/footer") %>
     </body>
 
     </html>

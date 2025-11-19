@@ -17,6 +17,7 @@ Object.assign(loadingDiv.style, {
   position: 'absolute',
   top: '10px',
   left: '50%',
+  right: '50%',
   transform: 'translateX(-50%)',
   background: 'rgba(0, 0, 0, 0.75)',
   color: '#fff',
