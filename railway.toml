@@ -1,0 +1,6 @@
+[build]
+nixpacks = true
+
+[deploy]
+numReplicas = 1
+startCommand = "npm start"

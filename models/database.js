@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "./database/florir.db"
+  storage: process.env.DB_PATH || "./database/florir.db"
 });
 
 module.exports = sequelize;
