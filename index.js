@@ -8,8 +8,16 @@ const sequelize = require("./models/database");
 const { Post } = require("./models/postModel");
 const { User } = require("./models/userModel");
 const { Comment } = require("./models/commentModel");
-const { marked } = require("marked");
+
+let marked;
+
+(async () => {
+  const m = await import("marked");
+  marked = m.marked;
+})();
 const nodemailer = require("nodemailer");
+
+
 
 function isAdmin(req, res, next) {
   if (req.session && req.session.user && req.session.user.isAdmin) {
