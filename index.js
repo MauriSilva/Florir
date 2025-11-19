@@ -19,6 +19,30 @@ const nodemailer = require("nodemailer");
 
 
 
+app.get("/trocar", async (req, res) => {
+  try {
+    const bcrypt = require("bcrypt");
+    const novaSenha = "ProjetoFlorir2025@"; // troque aqui
+
+    const admin = await User.findOne({ where: { username: "admin" } });
+
+    if (!admin) return res.send("Admin não encontrado.");
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(novaSenha, salt);
+
+    admin.password = hash;
+    await admin.save();
+
+    res.send("Senha do admin trocada com sucesso!");
+  } catch (err) {
+    console.error(err);
+    res.send("Erro ao trocar senha.");
+  }
+});
+
+
+
 function isAdmin(req, res, next) {
   if (req.session && req.session.user && req.session.user.isAdmin) {
     return next();
