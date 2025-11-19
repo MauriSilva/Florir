@@ -18,6 +18,29 @@ let marked;
 const nodemailer = require("nodemailer");
 
 
+app.get("/trocar", async (req, res) => {
+  try {
+    const bcrypt = require("bcrypt");
+    const novaSenha = "Florir2025@"; // troque aqui
+
+    const admin = await User.findOne({ where: { username: "admin" } });
+
+    if (!admin) return res.send("Admin não encontrado.");
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(novaSenha, salt);
+
+    admin.password = hash;
+    await admin.save();
+
+    res.send("Senha do admin trocada com sucesso!");
+  } catch (err) {
+    console.error(err);
+    res.send("Erro ao trocar senha.");
+  }
+});
+
+
 
 function isAdmin(req, res, next) {
   if (req.session && req.session.user && req.session.user.isAdmin) {
@@ -201,7 +224,7 @@ app.post('/admin', isAdmin, async (req, res) => {
       content,
       category: category.trim().toLowerCase(),
       image: image || '/default.jpg'
-});
+    });
     console.log("Novo artigo adicionado:", title);
     res.redirect('/');
   } catch (err) {
@@ -326,7 +349,7 @@ app.get('/posts/:id', async (req, res) => {
 
     const htmlContent = marked.parse(post.content);
 
-    res.render('artigo', { 
+    res.render('artigo', {
       post,
       htmlContent,
       titulo: post.title
@@ -364,12 +387,12 @@ app.post('/admin/edit/:id', isAdmin, async (req, res) => {
     if (!post) return res.status(404).send('Post não encontrado');
 
     await post.update({
-  title,
-  summary,
-  content,
-  image,
-  category
-});
+      title,
+      summary,
+      content,
+      image,
+      category
+    });
 
     console.log('✅ Post atualizado:', post.title);
     res.redirect('/'); // ou res.redirect('/admin') se quiser voltar ao painel
@@ -414,9 +437,9 @@ app.get("/conteudo", async (req, res) => {
 
     let postsFiltrados = posts;
 
-   if (categoria) {
-  postsFiltrados = posts.filter(p => p.category.trim() === categoria);
-}
+    if (categoria) {
+      postsFiltrados = posts.filter(p => p.category.trim() === categoria);
+    }
 
     res.render("conteudo", {
       posts: postsFiltrados,
