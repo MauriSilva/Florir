@@ -854,6 +854,16 @@ h6 {
   padding-bottom: 50px;
 }
 
+.sobre-image {
+  /* transforma em elemento de bloco */
+  margin: 0 auto;
+  /* centraliza horizontalmente */
+  max-width: 50%;
+  /* evita estourar contêiner */
+  border-radius: 15px;
+  padding-bottom: 50px;
+}
+
 
 .filtro {
   width: 10%;
