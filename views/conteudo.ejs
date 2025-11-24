@@ -11,8 +11,8 @@
   <!-- FILTROS DE CATEGORIA -->
   <div class="categorias-container">
     <% categorias.forEach(cat => { %>
-      <a href="?categoria=<%= cat %>" 
-         class="categoria-tag <%= categoriaSelecionada === cat ? 'ativa' : '' %>">
+      <a style="text-decoration: none; background-color: darkorchid;" href="?categoria=<%= cat %>" 
+         class="categoria-tag <%= categoriaSelecionada === cat ? 'ativa' : '' %>" >
         <%= cat %>
       </a>
     <% }) %>

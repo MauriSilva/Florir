@@ -257,6 +257,7 @@ app.post("/admin/create", isAdmin, async (req, res) => {
   }
 });
 
+//deletar comentarios
 app.post("/comunidade/deletar/:id", isAdmin, async (req, res) => {
   try {
     await Comment.destroy({ where: { id: req.params.id } });
@@ -266,6 +267,28 @@ app.post("/comunidade/deletar/:id", isAdmin, async (req, res) => {
     res.status(500).send("Erro ao deletar comentário.");
   }
 });
+
+// Deletar post
+app.post('/admin/deletar/:id', isAdmin, async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).send("Post não encontrado.");
+    }
+
+    await post.destroy();
+
+    console.log("🗑️ Post deletado:", post.title);
+    res.redirect('/admin'); // volta pro painel
+  } catch (err) {
+    console.error("Erro ao deletar post:", err);
+    res.status(500).send("Erro ao deletar o post.");
+  }
+});
+
 
 // página de cadastro
 app.get('/registrar', (req, res) => {
