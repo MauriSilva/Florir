@@ -53,7 +53,7 @@ function isAdmin(req, res, next) {
 app.use(async (req, res, next) => {
   try {
     const postsRecentes = await Post.findAll({
-      limit: 4,
+      limit: 6,
       order: [["createdAt", "DESC"]],
     });
 
@@ -336,13 +336,13 @@ app.post('/login', async (req, res) => {
     const user = await User.findOne({ where: { username } });
 
     if (!user) {
-      return res.send("Usuário não encontrado.");
+      return res.status(404).json({ erro: "Usuário não encontrado." });
     }
 
     const passwdMatch = await bcrypt.compare(password, user.password);
 
     if (!passwdMatch) {
-      return res.send("Senha incorreta.");
+      return res.status(400).json({ erro: "Senha incorreta." });
     }
 
     req.session.user = {
@@ -352,15 +352,14 @@ app.post('/login', async (req, res) => {
 
     req.session.isAdmin = user.isAdmin;
 
-    console.log("Usuário logado:", user.username);
-
-    return res.redirect('/');
+    return res.json({ sucesso: true });
 
   } catch (err) {
     console.error("Erro no login:", err);
-    res.status(500).send("Erro interno no servidor.");
+    res.status(500).json({ erro: "Erro interno no servidor." });
   }
 });
+
 
 
 //render de posts individuais. usa markdown
