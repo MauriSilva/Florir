@@ -1,45 +1,205 @@
 <%- include("partials/layout") %>
 <%- include("partials/header") %>
 
-    <!DOCTYPE html>
-    <html lang="pt-BR">
+<style>
+/* -------- FORMULÁRIO FLORIR (mesmo do login) -------- */
 
-    <head>
-      <meta charset="UTF-8">
-      <title>Registre-se - Florir</title>
-      <link rel="stylesheet" href="/css/style.css">
-    </head>
+.login-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 40px 20px;
+  justify-content: center;
+  align-items: center;
+}
 
-    <body>
-      <main class="glass-container-login">
-        <section class="section-login">
-          <div class="imagemLogin">
-            <!-- <img src="/img/imgLogin.jpg" style="width: 100%;" alt=""> -->
-          </div>
-          <div class="login-container">
-            <h2 style="text-align: center;">Crie sua conta</h2>
-            <form action="/registrar" method="POST">
-              <label>Usuário:</label>
-              <input type="text" name="username" required>
+.login-card {
+  background: rgba(255,255,255,0.9);
+  padding: 32px;
+  border-radius: 18px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.08);
+  width: 380px;
+  animation: fadeIn .5s ease;
+}
 
-              <label>Senha:</label>
-              <input type="password" name="password" required>
+.login-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: var(--brand-purple);
+}
 
-              <div style="margin-top: 15px;" class="checkbox">
-                <label>
-                  <input type="checkbox" name="aceitoTermos" required>
-                  Eu li e concordo com os <a href="/termos" target="_blank">Termos de Uso e Política de Privacidade</a>.
-                </label>
-              </div>
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-              <button type="submit">Registrar</button>
+/* Inputs com animação suave */
+.login-card input {
+  border: 1px solid rgba(0,0,0,0.15);
+  transition: border .3s, box-shadow .3s;
+}
 
-            </form>
-          </div>
+.login-card input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(226,83,136,0.4);
+}
 
-        </section>
-      </main>
+/* Botão animado */
+.login-card button {
+  transition: transform .2s, background .3s;
+}
+
+.login-card button:hover {
+  transform: scale(1.03);
+  background: #c93e72;
+}
+
+.login-card button:active {
+  transform: scale(0.97);
+}
+
+/* mostrar senha */
+.senha-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.senha-wrapper input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.senha-wrapper i {
+  position: absolute;
+  right: 12px;
+  font-size: 1.1rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: .3s;
+}
+
+.senha-wrapper i:hover {
+  color: var(--accent);
+}
+
+/* background floral */
+.bg-login {
+  background-image: url("/img/bgLogin.png");
+  background-size: 420px;
+  background-repeat: repeat;
+  background-position: center;
+  border-radius: 20px;
+}
+</style>
+
+
+<main class="glass-container-login bg-login" style="margin-top: 50px; margin-bottom: 70px;">
+
+  <div class="login-wrapper">
+
+    <!-- Card de cadastro -->
+    <div class="login-card">
+      <h2>Criar conta</h2>
+
+      <form id="registerForm">
+
+        <label>Usuário:</label>
+        <input type="text" name="username" required>
+
+        <label>Senha:</label>
+        <div class="senha-wrapper">
+          <input type="password" name="password" id="senha" required>
+          <i class="fa-solid fa-eye" id="toggleSenha"></i>
+        </div>
+
+        <!-- checkbox obrigatória -->
+        <label style="margin-top:10px; font-size: .9rem;">
+          <input type="checkbox" name="aceito" required>
+          Eu concordo com os 
+          <a href="/termos" target="_blank" style="color: var(--accent); font-weight: 600;">
+            Termos de Uso e Política de Privacidade
+          </a>.
+        </label>
+
+        <button type="submit" style="margin-top: 14px;">Registrar</button>
+
+        <p style="margin-top: 12px; font-size: .9rem; text-align: center; color: var(--muted);">
+          Já tem uma conta?  
+          <a href="/login" style="color: var(--accent); font-weight: 600; text-decoration: none;">
+            Entrar agora
+          </a>
+        </p>
+
+      </form>
+    </div>
+
+  </div>
+
+</main>
+
 <%- include("partials/footer") %>
-    </body>
 
-    </html>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+// mostrar senha
+const toggle = document.getElementById("toggleSenha");
+const senha = document.getElementById("senha");
+
+toggle.addEventListener("click", () => {
+  const tipo = senha.getAttribute("type") === "password" ? "text" : "password";
+  senha.setAttribute("type", tipo);
+
+  toggle.classList.toggle("fa-eye-slash");
+  toggle.classList.toggle("fa-eye");
+});
+
+// Cadastro AJAX
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("registerForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const username = form.username.value.trim();
+    const password = form.password.value.trim();
+
+    const resposta = await fetch("/registrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ username, password })
+    });
+
+    const resultado = await resposta.text();
+
+    // ⚠ Se já existir username
+    if (resultado.includes("já está em uso")) {
+      Swal.fire({
+        icon: "error",
+        title: "Erro ao registrar",
+        text: "Esse nome de usuário já está em uso.",
+        confirmButtonColor: "#e25388"
+      });
+      return;
+    }
+
+    // sucesso → redirecionar
+    Swal.fire({
+      icon: "success",
+      title: "Conta criada!",
+      text: "Redirecionando para o login...",
+      timer: 1500,
+      showConfirmButton: false
+    });
+
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 1500);
+  });
+});
+</script>
