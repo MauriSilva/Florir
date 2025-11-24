@@ -1,76 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Editar Post</title>
-  <!-- <style>
+<%- include("partials/layout") %>
+<%- include("partials/header") %>
 
-    body {
-  font-family: "Poppins", sans-serif;
-  background: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding-top: 40px;
-}
+<main class="glass-container">
+  <h1>Editar Artigo</h1>
 
-.admin-container {
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 500px;
-}
-
-.admin-form label {
-  display: block;
-  margin-top: 15px;
-  font-weight: 600;
-}
-
-.admin-form input,
-.admin-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-
-.admin-form button {
-  background: #e67ca3;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 20px;
-  width: 100%;
-}
-
-.admin-form button:hover {
-  background: #d4648c;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 20px;
-  text-decoration: none;
-  color: #555;
-}
-
-
-  </style> -->
-</head>
-<body>
-  <div class="admin-container">
-    <h1>Editar Artigo</h1>
-
-    <form action="/admin/edit/<%= post.id %>" method="POST" class="admin-form">
+  <form action="/admin/edit/<%= post.id %>" method="POST" class="admin-form">
       <label for="title">Título</label>
       <input type="text" id="title" name="title" value="<%= post.title %>" required>
 
@@ -80,19 +14,17 @@
       <label for="content">Conteúdo</label>
       <textarea id="content" name="content" rows="6" required><%= post.content %></textarea>
 
-      <label for="category">Categoria</label>
-      <input type="text" id="category" name="category" value="<%= post.category %>">
-
       <label for="image">URL da Imagem</label>
       <input type="text" id="image" name="image" value="<%= post.image %>" placeholder="https://...">
 
       <button type="submit">Salvar Alterações</button>
-    </form>
+  </form>
+</main>
 
     <a href="/" class="back-link">← Voltar</a>
 
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 
 <script>
   const easyMDE = new EasyMDE({
@@ -109,6 +41,3 @@
   });
 </script>
 
-  </div>
-</body>
-</html>

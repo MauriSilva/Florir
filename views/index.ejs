@@ -88,8 +88,8 @@
           <h2 style="text-align: center;">Últimas Postagens</h2>
 
           <div class="posts-container">
-            <% if (posts.length> 0) { %>
-              <% posts.forEach(post=> { %>
+            <% if (postsRecentes.length> 0) { %>
+              <% postsRecentes.forEach(post=> { %>
                 <div class="post-card">
                   <img src="<%= post.image %>" alt="<%= post.title %>">
                   <div class="post-info">
