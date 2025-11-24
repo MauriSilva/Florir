@@ -156,11 +156,9 @@ app.get("/sobre", (req, res) => {
 
 //contato
 app.get("/contato", (req, res) => {
-  res.render("contato", {
-    titulo: "Fale Conosco",
-    enviado: req.query.enviado || null   // <-- enviando variável para o EJS
-  });
+  res.render("404", { titulo: "Página em construção" });
 });
+
 
 // ROTA PARA PROCESSAR ENVIO DE EMAIL
 app.post("/contato", async (req, res) => {
@@ -476,6 +474,10 @@ app.get("/conteudo", async (req, res) => {
   }
 });
 
+//erro 404
+app.use((req, res) => {
+  res.status(404).render("404", { titulo: "Página não encontrada" });
+});
 
 
 // Iniciar servidor
