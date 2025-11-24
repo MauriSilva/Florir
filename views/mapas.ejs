@@ -1,17 +1,9 @@
 <%- include("partials/layout") %>
 <%- include("partials/header") %>
 
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mapa de Saúde | Florir</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</head>
-<body>
+
 
   <main class="glass-container">
   <h1 style="text-align:center;color:white;">Mapa de Saúde e ONGs</h1>
@@ -22,10 +14,8 @@
   <label><input type="checkbox" class="filtro" value="pharmacy" checked> Farmácias</label>
   <label><input type="checkbox" class="filtro" value="social_facility" checked> ONGs / Centros sociais</label>
 </div>
-
+  <p>Aviso: A localização pode nao estar 100% precisa, mas ainda mostrará lugares importantes da região</p>
 <div id="map" style="height: 80vh; border-radius: 10px;"></div>
 <script src="/scripts/mapa.js"></script>
 </main>
-</body>
-</html>
 <%- include("partials/footer") %>
