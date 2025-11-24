@@ -126,7 +126,7 @@ Contribuiu com ideias essenciais, direcionamento criativo, sugestões de layout 
 ### 🎨 Evellyn Florencio — **Visual Designer & Brand Artist**
 Criadora dos assets visuais, identidade da marca, logo oficial e elementos gráficos que deram personalidade ao Florir.
 
-### 📚 Amanda — **Documentation & Case Study Specialist**
+### 📚 Amanda Oliveira — **Documentation & Case Study Specialist**
 Responsável pela documentação, estudo de caso, organização textual e toda a parte escrita fundamental para apresentação do projeto.
 
 “Florescem sonhos onde há acolhimento.”
