@@ -1,50 +1,57 @@
 <%- include("partials/layout") %>
-<%- include("partials/header") %>
+  <%- include("partials/header") %>
 
-<main class="glass-container">
+    <main class="container">
 
-  <h1 style="text-align:center;">📚 Conteúdos Educativos</h1>
-  <p style="text-align:center; color:#444; margin-bottom: 30px;">
-    Explore nossos artigos organizados por tema.
-  </p>
+      <section class="text-center">
+        <h1>📚 Conteúdos Educativos</h1>
+        <p>Explore nossos artigos organizados por tema.</p>
 
-  <!-- FILTROS DE CATEGORIA -->
-  <div class="categorias-container">
-    <% categorias.forEach(cat => { %>
-      <a style="text-decoration: none;" href="?categoria=<%= cat %>" 
-         class="categoria-tag <%= categoriaSelecionada === cat ? 'ativa' : '' %>" >
-        °<%= cat %> |
-      </a>
-    <% }) %>
-
-    <a href="/conteudo" 
-       class="categoria-tag <%= !categoriaSelecionada ? 'ativa' : '' %>">
-      Todas
-    </a>
-  </div>
-
-  <!-- LISTAGEM DOS POSTS -->
-  <section class="posts-container" style="margin-top:20px;">
-    <% if (posts.length > 0) { %>
-      <% posts.forEach(post => { %>
-        <div class="post-card">
-          <% if (post.image) { %>
-            <img src="<%= post.image %>" alt="<%= post.title %>">
-          <% } %>
-          <div class="post-info">
-            <h3><%= post.title %></h3>
-            <p><%= post.summary %></p>
-            <a href="/posts/<%= post.id %>">Ler mais</a>
-          </div>
+        <!-- FILTROS DE CATEGORIA -->
+        <div class="glass-card"
+          style="display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; padding: 1rem;">
+          <a href="/conteudo" class="btn"
+            style="<%= !categoriaSelecionada ? 'background: var(--primary);' : 'background: transparent; color: var(--text-main); border: 1px solid #ddd;' %>">
+            Todas
+          </a>
+          <% categorias.forEach(cat=> { %>
+            <a href="?categoria=<%= cat %>" class="btn"
+              style="<%= categoriaSelecionada === cat ? 'background: var(--primary);' : 'background: transparent; color: var(--text-main); border: 1px solid #ddd;' %>">
+              <%= cat.charAt(0).toUpperCase() + cat.slice(1) %>
+            </a>
+            <% }) %>
         </div>
-      <% }) %>
-    <% } else { %>
-      <p style="text-align:center; margin-top:20px;">
-        Nenhum conteúdo encontrado para esta categoria.
-      </p>
-    <% } %>
-  </section>
+      </section>
 
-</main>
+      <!-- LISTAGEM DOS POSTS -->
+      <section>
+        <div class="posts-grid">
+          <% if (posts.length> 0) { %>
+            <% posts.forEach(post=> { %>
+              <div class="post-card">
+                <% if (post.image) { %>
+                  <img src="<%= post.image %>" alt="<%= post.title %>">
+                  <% } %>
+                    <div class="post-content">
+                      <h3>
+                        <%= post.title %>
+                      </h3>
+                      <p>
+                        <%= post.summary %>
+                      </p>
+                      <a href="/posts/<%= post.id %>">Ler mais <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+              </div>
+              <% }) %>
+                <% } else { %>
+                  <div class="glass-card text-center" style="grid-column: 1 / -1;">
+                    <p>Nenhum conteúdo encontrado para esta categoria.</p>
+                    <a href="/conteudo" class="btn">Ver todos</a>
+                  </div>
+                  <% } %>
+        </div>
+      </section>
 
-<%- include("partials/footer") %>
+    </main>
+
+    <%- include("partials/footer") %>

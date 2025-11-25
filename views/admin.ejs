@@ -1,58 +1,62 @@
 <%- include("partials/layout") %>
-<%- include("partials/header") %>
-<style>
-  .admin-table {
-    color: #000;
-  }
+  <%- include("partials/header") %>
+    <style>
+      .admin-table {
+        color: #000;
+      }
 
-  a {
-    color: #e25388;
-    text-decoration: none;
-    font-weight: 600;
-  }
-</style>
-<main class="glass-container">
+      a {
+        color: #e25388;
+        text-decoration: none;
+        font-weight: 600;
+      }
+    </style>
+    <main class="glass-container">
 
 
-<h2>Painel de Administração</h2>
+      <div class="admin-header text-center">
+        <h2>Painel de Administração</h2>
+        <div class="admin-actions">
+          <a href="/admin/create" class="btn btn-admin-create">
+            <i class="fa-solid fa-plus"></i> Criar Novo Post
+          </a>
+          <a href="/admin/comentarios" class="btn btn-admin-comments">
+            <i class="fa-solid fa-comments"></i> Gerenciar Comentários
+          </a>
+        </div>
+      </div>
 
-<a href="/admin/create" 
-  style="
-    display:inline-block; 
-    background:#e25388; 
-    color:white; 
-    padding:10px 20px; 
-    border-radius:10px; 
-    text-decoration:none; 
-    font-weight:600;
-    margin-bottom:20px;
-  ">
-  + Criar Novo Post
-</a>
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Resumo</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% posts.forEach(post=> { %>
+              <tr>
+                <td>
+                  <%= post.title %>
+                </td>
+                <td>
+                  <%= post.summary %>
+                </td>
+                <td class="actions-cell">
+                  <a href="/admin/edit/<%= post.id %>" class="btn-edit"><i class="fa-solid fa-pen"></i></a>
+                  <form action="/admin/deletar/<%= post.id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-delete"
+                      onclick="return confirm('Tem certeza que deseja excluir este post?');"><i
+                        class="fa-solid fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+          </tbody>
+        </table>
+      </div>
 
-<table class="admin-table">
-  <thead>
-    <tr>
-      <th>Título</th>
-      <th>Resumo</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% posts.forEach(post => { %>
-      <tr>
-        <td><%= post.title %></td>
-        <td><%= post.summary %></td>
-        <td>
-          <a href="/admin/edit/<%= post.id %>" class="btn-edit">Editar</a>
-          <form action="/admin/deletar/<%= post.id %>" method="POST" style="display:inline;">
-            <button type="submit" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir este post?');">Excluir</button>
-          </form>
-        </td>
-      </tr>
-    <% }) %>
-  </tbody>
-</table>
-
-</main>
-<%- include("partials/footer") %>
+    </main>
+    <%- include("partials/footer") %>

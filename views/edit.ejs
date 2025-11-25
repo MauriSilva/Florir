@@ -1,46 +1,45 @@
 <%- include("partials/layout") %>
-<%- include("partials/header") %>
+  <%- include("partials/header") %>
 
-<main class="glass-container">
-  <h1>Editar Artigo</h1>
+    <main class="glass-container">
+      <h1>Editar Artigo</h1>
 
-  <form action="/admin/edit/<%= post.id %>" method="POST" class="admin-form">
-      <label for="title">Título</label>
-      <input type="text" id="title" name="title" value="<%= post.title %>" required>
+      <form action="/admin/edit/<%= post.id %>" method="POST" class="admin-form">
+        <label for="title">Título</label>
+        <input type="text" id="title" name="title" value="<%= post.title %>" required>
 
-      <label for="summary">Resumo</label>
-      <textarea id="summary" name="summary" rows="2" required><%= post.summary %></textarea>
+        <label for="summary">Resumo</label>
+        <textarea id="summary" name="summary" rows="2" required><%= post.summary %></textarea>
 
-      <label for="content">Conteúdo</label>
-      <textarea id="content" name="content" rows="6" required><%= post.content %></textarea>
+        <label for="content">Conteúdo</label>
+        <textarea id="content" name="content" rows="6" required><%= post.content %></textarea>
 
-      <label for="category">Categoria</label>
-      <input type="text" id="category" name="category" value="<%= post.category %>" required>
+        <label for="category">Categoria</label>
+        <input type="text" id="category" name="category" value="<%= post.category %>" required>
 
-      <label for="image">URL da Imagem</label>
-      <input type="text" id="image" name="image" value="<%= post.image %>" placeholder="https://...">
+        <label for="image">URL da Imagem</label>
+        <input type="text" id="image" name="image" value="<%= post.image %>" placeholder="https://...">
 
-      <button type="submit">Salvar Alterações</button>
-  </form>
-</main>
+        <button type="submit">Salvar Alterações</button>
+      </form>
+    </main>
 
     <a href="/" class="back-link">← Voltar</a>
 
     <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
     <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 
-<script>
-  const easyMDE = new EasyMDE({
-    element: document.getElementById('content'),
-    spellChecker: false,
-    autosave: {
-      enabled: true,
-      uniqueId: "post-editor",
-      delay: 1000
-    },
-    placeholder: "Escreva seu artigo aqui usando Markdown...",
-    sideBySideFullscreen: true,
-    tabSize: 2,
-  });
-</script>
-
+    <script>
+      const easyMDE = new EasyMDE({
+        element: document.getElementById('content'),
+        spellChecker: false,
+        autosave: {
+          enabled: true,
+          uniqueId: "post-editor",
+          delay: 1000
+        },
+        placeholder: "Escreva seu artigo aqui usando Markdown...",
+        sideBySideFullscreen: true,
+        tabSize: 2,
+      });
+    </script>

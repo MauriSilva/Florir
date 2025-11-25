@@ -1,94 +1,48 @@
-<body>
 <header>
-  <!-- LOGO -->
-  <a href="/">
-    <img src="/img/florir-semdesc.png" alt="" style="width: auto; height: 50px; cursor: pointer;">
-  </a>
+  <div class="container">
+    <!-- LOGO -->
+    <a href="/" class="logo">
+      <img src="/img/florir-semdesc.png" alt="Florir Logo">
+    </a>
 
-  <!-- BOTÃO HAMBÚRGUER (vem antes do nav!) -->
-  <div class="menu-toggle" id="menu-toggle">
-    <i class="fa-solid fa-bars" style="color: #fff;"></i>
+    <!-- BOTÃO HAMBÚRGUER -->
+    <div class="menu-toggle" id="menu-toggle">
+      <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- MENU -->
+    <nav class="nav-links">
+      <a href="/">Início</a>
+      <a href="/conteudo">Artigos</a>
+      <a href="/mapas">Mapas</a>
+      <a href="/comunidade">Comunidade</a>
+      <a href="/sobre">Quem somos</a>
+      <a href="/contato">Contato</a>
+
+      <% if (user) { %>
+        <span style="color: var(--primary); font-weight: 600;">
+          <i class="fa-solid fa-user"></i>
+          <%= user.username %>
+        </span>
+        <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</a>
+        <% if (user.isAdmin) { %>
+          <a href="/admin" style="font-weight: 600; color: var(--primary);">Admin</a>
+          <% } %>
+            <% } else { %>
+              <a href="/login" class="btn" style="padding: 0.4rem 1rem; font-size: 0.9rem;">Entrar</a>
+              <% } %>
+    </nav>
   </div>
-
-  <!-- MENU -->
-<nav class="nav-links">
-
-  <!-- ÍCONES PADRÃO -->
-  <a href="/" data-text="Início"><i class="fa-solid fa-house"></i></a>
-  <a href="/conteudo" data-text="Artigos Educativos"><i class="fa-solid fa-book"></i></a>
-  <a href="/mapas" data-text="Mapas de Saúde"><i class="fa-solid fa-map-location-dot"></i></a>
-  <a href="/comunidade" data-text="Comunidade"><i class="fa-solid fa-people-group"></i></a>
-  <a href="/sobre" data-text="Quem somos"><i class="fa-solid fa-question"></i></a>
-  <a href="/contato" data-text="Contato"><i class="fa-solid fa-envelope"></i></a>
-
-  <% if (user) { %>
-
-    <!-- NOME DO USUÁRIO (não é link, não participa da animação do hover) -->
-    <span class="nav-username-desktop">
-      <i class="fa-solid fa-user"></i> <%= user.username %>
-    </span>
-
-    <!-- BOTÃO SAIR -->
-    <a href="/logout" data-text="Sair">
-      <i class="fa-solid fa-right-from-bracket"></i>
-    </a>
-
-    <!-- PAINEL ADMIN (somente se admin) -->
-    <% if (user.isAdmin) { %>
-      <a href="/admin" data-text="Painel ADM">
-        <i class="fa-solid fa-shield-halved"></i>
-      </a>
-    <% } %>
-
-  <% } else { %>
-    <!-- LOGIN QUANDO NÃO LOGADO -->
-    <a href="/login" data-text="Entrar">
-      <i class="fa-solid fa-arrow-right-to-bracket"></i>
-    </a>
-  <% } %>
-
-</nav>
+</header>
 
 <script>
-/* Florir - header + menu behavior */
-(function(){
-  const header = document.querySelector('header');
+  /* Mobile Menu Logic */
   const menuToggle = document.getElementById('menu-toggle');
   const navLinks = document.querySelector('.nav-links');
-  const MOBILE_BREAKPOINT = 1100;
 
-  function onScroll(){
-    if(window.scrollY > 0) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  }
-  window.addEventListener('scroll', onScroll, { passive:true });
-  onScroll();
-
-  if(menuToggle && navLinks){
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      const open = navLinks.classList.contains('open');
-      menuToggle.innerHTML = open ? '<i class=\"fa-solid fa-xmark\"></i>' : '<i class=\"fa-solid fa-bars\"></i>';
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
-
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        menuToggle.innerHTML = '<i class=\"fa-solid fa-bars\"></i>';
-        document.body.style.overflow = '';
-      });
-    });
-
-    window.addEventListener('resize', () => {
-      if(window.innerWidth >= MOBILE_BREAKPOINT && navLinks.classList.contains('open')){
-        navLinks.classList.remove('open');
-        menuToggle.innerHTML = '<i class=\"fa-solid fa-bars\"></i>';
-        document.body.style.overflow = '';
-      }
-    }, { passive:true });
-  }
-})();
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    const isActive = navLinks.classList.contains('active');
+    menuToggle.innerHTML = isActive ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+  });
 </script>
-
-  </header>

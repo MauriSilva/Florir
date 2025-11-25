@@ -9,6 +9,10 @@ const Comment = sequelize.define("Comment", {
   message: {
     type: DataTypes.TEXT,
     allowNull: false
+  },
+  approved: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 });
 

@@ -9,32 +9,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let userMarker = null;
 let locaisLayerGroup = L.layerGroup().addTo(map);
 
-// Cria o elemento de loading
-const loadingDiv = document.createElement('div');
-loadingDiv.id = 'loading';
-loadingDiv.textContent = '🔄 Carregando locais próximos...';
-Object.assign(loadingDiv.style, {
-  position: 'absolute',
-  top: '10px',
-  left: '50%',
-  right: '50%',
-  transform: 'translateX(-50%)',
-  background: 'rgba(0, 0, 0, 0.75)',
-  color: '#fff',
-  padding: '8px 16px',
-  borderRadius: '8px',
-  fontSize: '14px',
-  zIndex: 1000,
-  display: 'none'
-});
-document.body.appendChild(loadingDiv);
+// Elemento de loading (agora no HTML)
+const loadingDiv = document.getElementById('map-loading');
 
 function mostrarLoading() {
-  loadingDiv.style.display = 'block';
+  if (loadingDiv) loadingDiv.style.display = 'flex';
 }
 
 function esconderLoading() {
-  loadingDiv.style.display = 'none';
+  if (loadingDiv) loadingDiv.style.display = 'none';
 }
 
 // Ícones personalizados (coloque os arquivos em /public/icons/)
@@ -130,5 +113,3 @@ if (navigator.geolocation) {
 } else {
   alert("Seu navegador não suporta geolocalização.");
 }
-
-

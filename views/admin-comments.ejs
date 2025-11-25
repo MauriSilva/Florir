@@ -1,0 +1,50 @@
+<%- include("partials/layout") %>
+    <%- include("partials/header") %>
+
+        <main class="container" style="max-width: 800px; margin: 4rem auto;">
+            <div class="glass-card">
+                <h2 style="margin-bottom: 1.5rem; text-align: center;">Moderação de Comentários</h2>
+                <a href="/admin"
+                    style="display:inline-block; margin-bottom:20px; color: var(--primary); font-weight: 600;">← Voltar
+                    ao
+                    Painel</a>
+
+                <% if (comments.length===0) { %>
+                    <p style="text-align: center; color: var(--text-muted);">Não há comentários pendentes de aprovação.
+                    </p>
+                    <% } else { %>
+                        <div class="comments-list">
+                            <% comments.forEach(comment=> { %>
+                                <div
+                                    style="background: rgba(255,255,255,0.8); border: 1px solid #eee; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+                                    <p><strong>
+                                            <%= comment.name %>
+                                        </strong> disse:</p>
+                                    <p
+                                        style="background: #f9f9f9; padding: 10px; border-radius: 8px; margin: 0.5rem 0;">
+                                        <%= comment.message %>
+                                    </p>
+                                    <p><small style="color: #999;">
+                                            <%= new Date(comment.createdAt).toLocaleString() %>
+                                        </small></p>
+
+                                    <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: flex-end;">
+                                        <form action="/admin/comentarios/aprovar/<%= comment.id %>" method="POST">
+                                            <button type="submit" class="btn"
+                                                style="background-color: #27ae60; color: white; padding: 0.5rem 1rem; font-size: 0.9rem;">Aprovar</button>
+                                        </form>
+
+                                        <form action="/admin/comentarios/deletar/<%= comment.id %>" method="POST">
+                                            <button type="submit" class="btn"
+                                                style="background-color: #c0392b; color: white; padding: 0.5rem 1rem; font-size: 0.9rem;"
+                                                onclick="return confirm('Excluir este comentário permanentemente?');">Excluir</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                        <% } %>
+            </div>
+        </main>
+
+        <%- include("partials/footer") %>

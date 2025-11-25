@@ -1,0 +1,9 @@
+@echo off
+echo Parando processos Node.js...
+taskkill /F /IM node.exe
+echo.
+echo Limpando cache do sistema (opcional)...
+echo.
+echo Iniciando servidor Florir...
+node index.js
+pause

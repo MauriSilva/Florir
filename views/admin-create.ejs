@@ -1,54 +1,63 @@
 <%- include("partials/layout") %>
-<%- include("partials/header") %>
+  <%- include("partials/header") %>
 
-<main class="glass-container">
+    <main class="container" style="max-width: 800px; margin: 4rem auto;">
+      <div class="glass-card">
+        <h1 style="text-align:center; margin-bottom: 2rem;">Criar Novo Post</h1>
 
-  <h1 style="text-align:center;">Criar Novo Post</h1>
+        <form action="/admin/create" method="POST">
 
-  <form action="/admin/create" method="POST" style="margin-top:30px;">
+          <div class="form-group">
+            <label>Título</label>
+            <input type="text" name="title" required>
+          </div>
 
-    <label>Título</label>
-    <input type="text" name="title" required>
+          <div class="form-group">
+            <label>Resumo</label>
+            <textarea name="summary" rows="2" required></textarea>
+          </div>
 
-    <label>Resumo</label>
-    <textarea name="summary" rows="2" required></textarea>
+          <div class="form-group">
+            <label>Conteúdo</label>
+            <textarea id="content" name="content" rows="6" required></textarea>
+          </div>
 
-    <label>Conteúdo</label>
-    <textarea id="content" name="content" rows="6" required"></textarea>
+          <div class="form-group">
+            <label>Categoria</label>
+            <input type="text" name="category" placeholder="educação sexual, curiosidades, cuidados..." required>
+          </div>
 
-    <label>Categoria</label>
-    <input type="text" name="category" placeholder="educação sexual, curiosidades, cuidados..." required>
+          <div class="form-group">
+            <label>URL da Imagem</label>
+            <input type="text" name="image" placeholder="https://...">
+          </div>
 
-    <label>URL da Imagem</label>
-    <input type="text" name="image" placeholder="https://...">
+          <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Criar Post</button>
 
-    <button type="submit" style="margin-top:20px;">Criar Post</button>
+        </form>
 
-  </form>
+        <a href="/admin" style="display:inline-block; margin-top:20px; color: var(--primary); font-weight: 600;">
+          ← Voltar ao Painel
+        </a>
+      </div>
 
-  <a href="/admin" style="display:inline-block; margin-top:20px; color:#551049;">
-    ← Voltar ao Painel
-  </a>
+      <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+      <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+      <script>
+        const easyMDE = new EasyMDE({
+          element: document.getElementById('content'),
+          spellChecker: false,
+          autosave: {
+            enabled: true,
+            uniqueId: "post-editor",
+            delay: 1000
+          },
+          placeholder: "Escreva seu artigo aqui usando Markdown...",
+          sideBySideFullscreen: true,
+          tabSize: 2,
+        });
+      </script>
+    </main>
 
-<script>
-  const easyMDE = new EasyMDE({
-    element: document.getElementById('content'),
-    spellChecker: false,
-    autosave: {
-      enabled: true,
-      uniqueId: "post-editor",
-      delay: 1000
-    },
-    placeholder: "Escreva seu artigo aqui usando Markdown...",
-    sideBySideFullscreen: true,
-    tabSize: 2,
-  });
-</script>
-
-
-</main>
-
-<%- include("partials/footer") %>
+    <%- include("partials/footer") %>

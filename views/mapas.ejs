@@ -1,21 +1,54 @@
 <%- include("partials/layout") %>
-<%- include("partials/header") %>
+  <%- include("partials/header") %>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+    <main class="container">
 
-  <main class="glass-container">
-  <h1 style="text-align:center;color:white;">Mapa de Saúde e ONGs</h1>
+      <section class="text-center">
+        <h1>Mapa de Saúde e ONGs</h1>
+        <p>Encontre serviços essenciais próximos da sua região.</p>
 
-<div class="filtros">
-  <label><input type="checkbox" class="filtro" value="hospital" checked> Hospitais</label>
-  <label><input type="checkbox" class="filtro" value="clinic" checked> Clínicas</label>
-  <label><input type="checkbox" class="filtro" value="pharmacy" checked> Farmácias</label>
-  <label><input type="checkbox" class="filtro" value="social_facility" checked> ONGs / Centros sociais</label>
-</div>
-  <p>Aviso: A localização pode nao estar 100% precisa, mas ainda mostrará lugares importantes da região</p>
-<div id="map" style="height: 80vh; border-radius: 10px;"></div>
-<script src="/scripts/mapa.js"></script>
-</main>
-<%- include("partials/footer") %>
+        <div class="glass-card" style="margin: 1rem auto; max-width: 800px;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Filtrar por:</h3>
+          <div class="filtros" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="checkbox" class="filtro" value="hospital" checked style="width: auto; margin: 0;"> Hospitais
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="checkbox" class="filtro" value="clinic" checked style="width: auto; margin: 0;"> Clínicas
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="checkbox" class="filtro" value="pharmacy" checked style="width: auto; margin: 0;"> Farmácias
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+              <input type="checkbox" class="filtro" value="social_facility" checked style="width: auto; margin: 0;">
+              ONGs / Centros sociais
+            </label>
+          </div>
+        </div>
+
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 1rem;">
+          Aviso: A localização pode não estar 100% precisa, mas mostrará lugares importantes da região.
+        </p>
+
+        <div style="position: relative; height: 70vh; margin-top: 1rem;">
+          <div id="map"
+            style="height: 100%; width: 100%; border-radius: var(--radius-md); box-shadow: var(--shadow-md); z-index: 1;">
+          </div>
+
+          <!-- Loading Overlay -->
+          <div id="map-loading"
+            style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 0.95); padding: 1rem 2rem; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); z-index: 1000; color: var(--primary); font-weight: 600; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-spinner fa-spin" style="font-size: 1.5rem;"></i>
+            <span>Buscando locais próximos...</span>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <script src="/scripts/mapa.js"></script>
+    <%- include("partials/footer") %>
