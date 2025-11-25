@@ -43,15 +43,31 @@
   <section>
     <h2>💬 Deixe seu comentário</h2>
 
-    <form action="/comunidade" method="POST">
-      <label>Seu nome:</label>
-      <input type="text" name="name" required>
+<% if (user) { %>
 
-      <label>Sua mensagem:</label>
-      <textarea name="message" required></textarea>
+  <!-- FORMULÁRIO PARA USUÁRIO LOGADO -->
+  <form action="/comunidade" method="POST">
+    <label>Seu nome:</label>
+    <input type="text" name="name" value="<%= user.username %>" readonly>
 
-      <button type="submit">Enviar comentário</button>
-    </form>
+    <label>Sua mensagem:</label>
+    <textarea name="message" required></textarea>
+
+    <button type="submit">Enviar comentário</button>
+  </form>
+
+<% } else { %>
+
+  <!-- AVISO PARA NÃO LOGADOS -->
+  <p style="margin-top: 10px; background: #fff; padding: 14px; border-radius: 12px;">
+    <strong>Você precisa fazer login para comentar.</strong><br>
+    <a href="/login" style="color: var(--accent); font-weight: 600;">
+      Entrar no Florir
+    </a>
+  </p>
+
+<% } %>
+
 
     <h3 class="mt-1">Comentários da Comunidade</h3>
 

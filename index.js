@@ -137,14 +137,22 @@ app.get("/comunidade", async (req, res) => {
 });
 
 app.post("/comunidade", async (req, res) => {
-  const { name, message } = req.body;
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
 
-  if (!name || !message) return res.redirect("/comunidade");
+  const { message } = req.body;
 
-  await Comment.create({ name, message });
+  if (!message.trim()) return res.redirect("/comunidade");
+
+  await Comment.create({
+    name: req.session.user.username,
+    message
+  });
 
   res.redirect("/comunidade");
 });
+
 
 //sobre
 app.get("/sobre", (req, res) => {
