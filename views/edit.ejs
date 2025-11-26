@@ -1,45 +1,70 @@
 <%- include("partials/layout") %>
   <%- include("partials/header") %>
 
-    <main class="glass-container">
-      <h1>Editar Artigo</h1>
+    <main class="container" style="max-width: 800px; margin: 4rem auto;">
+      <div class="glass-card">
+        <h1 style="text-align:center; margin-bottom: 2rem;">Editar Post</h1>
 
-      <form action="/admin/edit/<%= post.id %>" method="POST" class="admin-form">
-        <label for="title">Título</label>
-        <input type="text" id="title" name="title" value="<%= post.title %>" required>
+        <form action="/admin/edit/<%= post.id %>" method="POST">
 
-        <label for="summary">Resumo</label>
-        <textarea id="summary" name="summary" rows="2" required><%= post.summary %></textarea>
+          <div class="form-group">
+            <label for="title">Título</label>
+            <input type="text" id="title" name="title" value="<%= post.title %>" required>
+          </div>
 
-        <label for="content">Conteúdo</label>
-        <textarea id="content" name="content" rows="6" required><%= post.content %></textarea>
+          <div class="form-group">
+            <label for="summary">Resumo</label>
+            <textarea id="summary" name="summary" rows="2" required><%= post.summary %></textarea>
+          </div>
 
-        <label for="category">Categoria</label>
-        <input type="text" id="category" name="category" value="<%= post.category %>" required>
+          <div class="form-group">
+            <label for="category">Categoria</label>
+            <select id="category" name="category" required
+              style="width: 100%; max-width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box;">
+              <option value="saúde" <%=post.category==='saúde' ? 'selected' : '' %>>Saúde</option>
+              <option value="educação" <%=post.category==='educação' ? 'selected' : '' %>>Educação</option>
+              <option value="curiosidades" <%=post.category==='curiosidades' ? 'selected' : '' %>>Curiosidades</option>
+              <option value="cuidados" <%=post.category==='cuidados' ? 'selected' : '' %>>Cuidados</option>
+              <option value="pré natal" <%=post.category==='pré natal' ? 'selected' : '' %>>Pré Natal</option>
+            </select>
+          </div>
 
-        <label for="image">URL da Imagem</label>
-        <input type="text" id="image" name="image" value="<%= post.image %>" placeholder="https://...">
+          <div class="form-group">
+            <label for="image">URL da Imagem</label>
+            <input type="text" id="image" name="image" value="<%= post.image %>" placeholder="https://...">
+          </div>
 
-        <button type="submit">Salvar Alterações</button>
-      </form>
+          <div class="form-group">
+            <label for="content">Conteúdo</label>
+            <textarea id="content" name="content" rows="6"><%= post.content %></textarea>
+          </div>
+
+          <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Salvar Alterações</button>
+
+        </form>
+
+        <a href="/admin" style="display:inline-block; margin-top:20px; color: var(--primary); font-weight: 600;">
+          ← Voltar ao Painel
+        </a>
+      </div>
+
+      <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+      <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
+      <script>
+        const easyMDE = new EasyMDE({
+          element: document.getElementById('content'),
+          spellChecker: false,
+          autosave: {
+            enabled: true,
+            uniqueId: "post-editor-<%= post.id %>",
+            delay: 1000
+          },
+          placeholder: "Escreva seu artigo aqui usando Markdown...",
+          sideBySideFullscreen: true,
+          tabSize: 2,
+        });
+      </script>
     </main>
 
-    <a href="/" class="back-link">← Voltar</a>
-
-    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-
-    <script>
-      const easyMDE = new EasyMDE({
-        element: document.getElementById('content'),
-        spellChecker: false,
-        autosave: {
-          enabled: true,
-          uniqueId: "post-editor",
-          delay: 1000
-        },
-        placeholder: "Escreva seu artigo aqui usando Markdown...",
-        sideBySideFullscreen: true,
-        tabSize: 2,
-      });
-    </script>
+    <%- include("partials/footer") %>

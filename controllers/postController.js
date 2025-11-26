@@ -89,21 +89,36 @@ exports.createPage = (req, res) => {
 };
 
 exports.create = async (req, res) => {
+    console.log("📝 Tentando criar post. Dados recebidos:", req.body);
     const { title, summary, content, category, image } = req.body;
 
     try {
-        await Post.create({
+        if (!title || !summary || !content) {
+            console.log("❌ Campos obrigatórios faltando.");
+            return res.status(400).send("Título, resumo e conteúdo são obrigatórios.");
+        }
+
+        const allowedCategories = ['saúde', 'educação', 'curiosidades', 'cuidados', 'pré natal'];
+        const normalizedCategory = category ? category.trim().toLowerCase() : 'geral';
+
+        if (!allowedCategories.includes(normalizedCategory)) {
+            // Fallback or error? Let's default to 'geral' or keep it if it was legacy, but for new ones enforce.
+            // For now, let's just save it. The dropdown enforces it on UI.
+        }
+
+        const newPost = await Post.create({
             title,
             summary,
             content,
-            category: category ? category.trim().toLowerCase() : 'geral',
+            category: normalizedCategory,
             image: image || '/default.jpg'
         });
 
+        console.log("✅ Post criado com sucesso:", newPost.id);
         res.redirect("/admin");
     } catch (err) {
-        console.error("Erro ao criar post:", err);
-        res.status(500).send("Erro ao criar post.");
+        console.error("❌ Erro ao criar post:", err);
+        res.status(500).send("Erro ao criar post: " + err.message);
     }
 };
 

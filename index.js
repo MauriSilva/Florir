@@ -29,6 +29,7 @@ app.use(session({
 
 // Global Middlewares
 app.use((req, res, next) => {
+  console.log(`[REQUEST] ${req.method} ${req.url}`);
   res.locals.user = req.session.user || null;
   res.locals.isAdmin = req.session.user && req.session.user.isAdmin; // Ensure boolean
   res.locals.titulo = "Florir";
@@ -75,6 +76,15 @@ app.use(async (req, res, next) => {
 app.use('/', authRoutes);
 app.use('/', mainRoutes);
 app.use('/', postRoutes);
+
+// DEBUG: Direct Route Definition
+const authController = require('./controllers/authController');
+const { isAdmin } = require('./middlewares/authMiddleware');
+app.get('/admin/users/create', isAdmin, authController.createUserPage);
+app.post('/admin/users/create', isAdmin, authController.createUser);
+app.get('/admin/users/edit/:id', isAdmin, authController.editUserPage);
+app.post('/admin/users/edit/:id', isAdmin, authController.updateUser);
+app.post('/admin/users/delete/:id', isAdmin, authController.deleteUser);
 
 // 404 Handler
 app.use((req, res) => {

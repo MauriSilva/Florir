@@ -1,0 +1,36 @@
+<%- include("partials/layout") %>
+    <%- include("partials/header") %>
+
+        <main class="container" style="max-width: 500px; margin: 4rem auto;">
+            <div class="glass-card">
+                <h2 style="text-align: center; margin-bottom: 1.5rem;">Editar Usuário</h2>
+
+                <form action="/admin/users/edit/<%= user.id %>" method="POST">
+                    <div class="form-group">
+                        <label for="username">Nome de Usuário</label>
+                        <input type="text" id="username" name="username" value="<%= user.username %>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Nova Senha (deixe em branco para manter)</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 1rem;">
+                        <input type="checkbox" id="isAdmin" name="isAdmin" style="width: auto; margin: 0;"
+                            <%=user.isAdmin ? 'checked' : '' %>>
+                        <label for="isAdmin" style="margin: 0; cursor: pointer;">É Administrador?</label>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 1.5rem;">Salvar
+                        Alterações</button>
+                </form>
+
+                <a href="/admin/users/create"
+                    style="display:block; text-align:center; margin-top:20px; color: var(--primary); font-weight: 600;">
+                    ← Voltar
+                </a>
+            </div>
+        </main>
+
+        <%- include("partials/footer") %>

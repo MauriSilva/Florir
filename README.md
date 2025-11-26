@@ -21,13 +21,14 @@ O sistema foi criado com foco em **acolhimento, acessibilidade e informação co
 ## 🚀 Tecnologias Utilizadas
 
 ### **Backend**
-- Node.js  
+- Node.js (v18+)
 - Express  
-- Sequelize (SQLite)
+- Sequelize (ORM)
+- **Banco de Dados Flexível**: Suporta SQLite (padrão) e MySQL.
 
 ### **Frontend**
 - HTML + EJS  
-- CSS puro  
+- CSS puro (Design System próprio)
 - Font Awesome
 
 ### **Extras**
@@ -36,84 +37,82 @@ O sistema foi criado com foco em **acolhimento, acessibilidade e informação co
 
 ---
 
-## ⚙️ Como Rodar o Projeto
+## ⚙️ Como Rodar o Projeto (Guia Rápido)
 
-# 1️⃣ Instalar dependências
+Qualquer pessoa pode rodar este projeto seguindo os passos abaixo.
+
+### 1️⃣ Pré-requisitos
+- **Node.js** instalado (versão 18 ou superior).
+- **Git** instalado.
+
+### 2️⃣ Instalação
+
+Clone o repositório e instale as dependências:
+
 ```bash
+git clone https://github.com/MauriSilva/Florir.git
+cd Florir
 npm install
 ```
 
-# 2️⃣ Rodar o servidor
-```bash
-node app.js
-```
-# 3️⃣ Acessar no navegador
+### 3️⃣ Configuração do Banco de Dados
 
-http://localhost:3000
+O projeto aceita **SQLite** (mais fácil, não precisa instalar nada) ou **MySQL**.
+
+#### Opção A: SQLite (Recomendado para Testes Rápido)
+Não precisa configurar nada! O sistema já vem configurado para criar um arquivo de banco de dados local em `./database/florir.db`.
+
+#### Opção B: MySQL (Para Produção ou Preferência)
+1. Crie um arquivo `.env` na raiz do projeto (copie do `.env.example`).
+2. Edite o `.env` com suas credenciais:
+
+```env
+DB_DIALECT=mysql
+DB_HOST=localhost
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_NAME=florir
+```
+
+### 4️⃣ Rodar o Servidor
+
+```bash
+npm start
+```
+
+Acesse no navegador: **http://localhost:3000**
+
 ---
+
 ## 🔐 Usuário Admin Padrão
 
 Na primeira execução, um administrador é criado automaticamente:
 
-Usuário: admin
-Senha: 1234
+- **Usuário:** admin
+- **Senha:** 1234
+
+---
 
 ## ✨ Funcionalidades
 
-🔒 Login + painel administrador
+- 🔒 Login + painel administrador
+- 📝 CRUD de artigos educativos (Markdown)
+- 💬 Moderação de comentários
+- 🗺️ Mapa com unidades de saúde e ONGs
+- 📬 Formulário de contato
+- 🌼 Layout acolhedor e responsivo
 
-📝 CRUD de artigos educativos
-
-🗺️ Mapa com unidades de saúde e ONGs
-
-📬 Formulário de contato
-
-🌼 Layout acolhedor inspirado no propósito do projeto
-
-📱 Responsividade
-
-## 🗃️ Banco de Dados
-
-O projeto usa SQLite (arquivo local):
-
-/database/florir.db
-
-## 🛠️ Melhorias Futuras
-
-Comentários em posts
-
-Painel de moderadores
-
-Dark/Light mode
-
-Exportação de artigos
-
-API pública
+---
 
 ## 🤝 Como Contribuir
 
-Faça um fork
+1. Faça um fork
+2. Crie uma branch: `git checkout -b feature/nome-da-feature`
+3. Commit: `git commit -m "feat: adiciona nova feature"`
+4. Push: `git push origin feature/nome-da-feature`
+5. Abra um Pull Request
 
-Crie uma branch:
-
-git checkout -b feature/nome-da-feature
-
-
-Commit:
-
-git commit -m "feat: adiciona nova feature"
-
-
-Push:
-
-git push origin feature/nome-da-feature
-
-
-Abra um Pull Request
-
-# 📄 Licença
-
-Licença MIT – sinta-se livre para usar, modificar e espalhar 🌸
+---
 
 ## 💜 Agradecimentos & Equipe
 
@@ -128,5 +127,7 @@ Criadora dos assets visuais, identidade da marca, logo oficial e elementos gráf
 
 ### 📚 Amanda Oliveira — **Documentation & Case Study Specialist**
 Responsável pela documentação, estudo de caso, organização textual e toda a parte escrita fundamental para apresentação do projeto.
+
+---
 
 “Florescem sonhos onde há acolhimento.”

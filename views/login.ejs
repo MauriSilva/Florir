@@ -1,249 +1,280 @@
 <%- include("partials/layout") %>
-<%- include("partials/header") %>
+  <%- include("partials/header") %>
 
-<style>
-/* -------- LOGIN ESTILIZADO FLORIR -------- */
+    <style>
+      /* -------- LOGIN ESTILIZADO FLORIR -------- */
 
-.login-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  padding: 40px 20px;
-  justify-content: center;
-  align-items: center;
-}
+      .login-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        padding: 40px 20px;
+        justify-content: center;
+        align-items: center;
+      }
 
-.login-card {
-  background: rgba(255,255,255,0.9);
-  padding: 32px;
-  border-radius: 18px;
-  box-shadow: 0 8px 26px rgba(0,0,0,0.08);
-  width: 380px;
-  animation: fadeIn .5s ease;
-}
+      .login-card {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 32px;
+        border-radius: 18px;
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.08);
+        width: 380px;
+        animation: fadeIn .5s ease;
+      }
 
-.login-card h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  color: var(--brand-purple);
-}
+      .login-card h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        color: var(--brand-purple);
+      }
 
-.login-illustration img {
-  max-width: 360px;
-  width: 100%;
-  border-radius: 18px;
-  animation: float 4s ease-in-out infinite;
-}
+      .login-illustration img {
+        max-width: 360px;
+        width: 100%;
+        border-radius: 18px;
+        animation: float 4s ease-in-out infinite;
+      }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
 
-@keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
-}
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-/* Inputs com animação suave */
-.login-card input {
-  border: 1px solid rgba(0,0,0,0.15);
-  transition: border .3s, box-shadow .3s;
-}
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
 
-.login-card input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 6px rgba(226,83,136,0.4);
-}
+        50% {
+          transform: translateY(-8px);
+        }
 
-/* Botão animado */
-.login-card button {
-  transition: transform .2s, background .3s;
-}
+        100% {
+          transform: translateY(0);
+        }
+      }
 
-.login-card button:hover {
-  transform: scale(1.03);
-  background: #c93e72;
-}
+      /* Inputs com animação suave */
+      .login-card input {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        transition: border .3s, box-shadow .3s;
+      }
 
-.login-card button:active {
-  transform: scale(0.97);
-}
+      .login-card input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 6px rgba(226, 83, 136, 0.4);
+      }
 
-/* Animação de erro (tremida) */
-.shake {
-  animation: shake .35s ease;
-}
+      /* Botão animado */
+      .login-card button {
+        transition: transform .2s, background .3s;
+      }
 
-.senha-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
+      .login-card button:hover {
+        transform: scale(1.03);
+        background: #c93e72;
+      }
 
-.senha-wrapper input {
-  width: 100%;
-  padding-right: 40px;
-}
+      .login-card button:active {
+        transform: scale(0.97);
+      }
 
-.senha-wrapper i {
-  position: absolute;
-  right: 12px;
-  font-size: 1.1rem;
-  color: var(--muted);
-  cursor: pointer;
-  transition: .3s;
-}
+      /* Animação de erro (tremida) */
+      .shake {
+        animation: shake .35s ease;
+      }
 
-.senha-wrapper i:hover {
-  color: var(--accent);
-}
+      .senha-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
 
-.bg-login {
-  background-image: url("/img/bgLogin.png");
-  background-size: 420px;       /* tamanho pequeno p/ repetir bem */
-  background-repeat: repeat;    /* pattern suave */
-  background-position: center;
-  border-radius: 20px;
-}
+      .senha-wrapper input {
+        width: 100%;
+        padding-right: 40px;
+      }
+
+      .senha-wrapper i {
+        position: absolute;
+        right: 12px;
+        font-size: 1.1rem;
+        color: var(--muted);
+        cursor: pointer;
+        transition: .3s;
+      }
+
+      .senha-wrapper i:hover {
+        color: var(--accent);
+      }
+
+      .bg-login {
+        background-image: url("/img/bgLogin.png");
+        background-size: 420px;
+        /* tamanho pequeno p/ repetir bem */
+        background-repeat: repeat;
+        /* pattern suave */
+        background-position: center;
+        border-radius: 20px;
+      }
 
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-4px); }
-  100% { transform: translateX(0); }
-}
-</style>
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
 
-<main class="glass-container-login bg-login" style="margin-top: 50px; margin-bottom: 70px;">
-  
-  <div class="login-wrapper">
+        25% {
+          transform: translateX(-6px);
+        }
 
-    <!-- Imagem -->
-    <!-- <div class="login-illustration">
+        50% {
+          transform: translateX(6px);
+        }
+
+        75% {
+          transform: translateX(-4px);
+        }
+
+        100% {
+          transform: translateX(0);
+        }
+      }
+    </style>
+
+    <main class="glass-container-login bg-login" style="margin-top: 50px; margin-bottom: 70px;">
+
+      <div class="login-wrapper">
+
+        <!-- Imagem -->
+        <!-- <div class="login-illustration">
       <img src="/img/bgLogin.png">
     </div> -->
 
-    <!-- Card de login -->
-<div class="login-card">
-  <h2>Faça seu login</h2>
+        <!-- Card de login -->
+        <div class="login-card">
+          <h2>Faça seu login</h2>
 
-  <form id="loginForm">
+          <form id="loginForm">
 
-    <label>Usuário:</label>
-    <input type="text" name="username" required>
+            <label for="username">Usuário:</label>
+            <input type="text" name="username" id="username" required>
 
-    <label>Senha:</label>
-<div class="senha-wrapper">
-  <input type="password" name="password" id="senha" required>
-  <i class="fa-solid fa-eye" id="toggleSenha"></i>
-</div>
+            <label for="senha">Senha:</label>
+            <div class="senha-wrapper">
+              <input type="password" name="password" id="senha" required>
+              <i class="fa-solid fa-eye" id="toggleSenha"></i>
+            </div>
 
-    <button type="submit" style="margin-top: 14px;">Entrar</button>
+            <button type="submit" style="margin-top: 14px;">Entrar</button>
 
-    <p style="margin-top: 12px; font-size: .9rem; text-align: center; color: var(--muted);">
-      Não tem uma conta?  
-      <a href="/registrar" style="color: var(--accent); font-weight: 600; text-decoration: none;">
-        Criar agora
-      </a>
-    </p>
+            <p style="margin-top: 12px; font-size: .9rem; text-align: center; color: var(--muted);">
+              Não tem uma conta?
+              <a href="/registrar" style="color: var(--accent); font-weight: 600; text-decoration: none;">
+                Criar agora
+              </a>
+            </p>
 
-  </form>
-</div>
-
-
-  </div>
-
-</main>
-
-<%- include("partials/footer") %>
-
-<!-- SweetAlert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-
-const toggle = document.getElementById("toggleSenha");
-const senha = document.getElementById("senha");
-
-toggle.addEventListener("click", () => {
-  const tipo = senha.getAttribute("type") === "password" ? "text" : "password";
-  senha.setAttribute("type", tipo);
-
-  // alternar ícone
-  if (tipo === "text") {
-    toggle.classList.remove("fa-eye");
-    toggle.classList.add("fa-eye-slash");
-  } else {
-    toggle.classList.remove("fa-eye-slash");
-    toggle.classList.add("fa-eye");
-  }
-});
+          </form>
+        </div>
 
 
-// Login AJAX + animações
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("loginForm");
-  const senhaInput = document.getElementById("senha");
+      </div>
 
-  form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    </main>
 
-  const username = form.username.value.trim();
-  const password = form.password.value.trim();
+    <%- include("partials/footer") %>
 
-  const resposta = await fetch("/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ username, password })
-  });
+      <!-- SweetAlert -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  const resultado = await resposta.json();
+      <script>
+
+        const toggle = document.getElementById("toggleSenha");
+        const senha = document.getElementById("senha");
+
+        toggle.addEventListener("click", () => {
+          const tipo = senha.getAttribute("type") === "password" ? "text" : "password";
+          senha.setAttribute("type", tipo);
+
+          // alternar ícone
+          if (tipo === "text") {
+            toggle.classList.remove("fa-eye");
+            toggle.classList.add("fa-eye-slash");
+          } else {
+            toggle.classList.remove("fa-eye-slash");
+            toggle.classList.add("fa-eye");
+          }
+        });
 
 
-    // ERRO
-    if (resultado.erro) {
+        // Login AJAX + animações
+        document.addEventListener("DOMContentLoaded", () => {
+          const form = document.getElementById("loginForm");
+          const senhaInput = document.getElementById("senha");
 
-      // efeito de tremida
-      senhaInput.classList.add("shake");
-      setTimeout(() => senhaInput.classList.remove("shake"), 400);
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-      senhaInput.value = "";
+            const username = form.username.value.trim();
+            const password = form.password.value.trim();
 
-      Swal.fire({
-        icon: "error",
-        title: "Algo deu errado",
-        text: resultado.erro,
-        confirmButtonColor: "#e25388",
-        background: "#fff",
-        color: "#333",
-        backdrop: `rgba(0,0,0,0.4)`
-      });
+            const resposta = await fetch("/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ username, password })
+            });
 
-      return;
-    }
+            const resultado = await resposta.json();
 
-    // SUCESSO
-    Swal.fire({
-      icon: "success",
-      title: "Login efetuado!",
-      text: "Redirecionando...",
-      timer: 1200,
-      showConfirmButton: false,
-      background: "#fff",
-      color: "#333"
-    });
 
-    setTimeout(() => {
-      window.location.href = "/admin";
-    }, 1200);
+            // ERRO
+            if (resultado.erro) {
 
-  });
-});
-</script>
+              // efeito de tremida
+              senhaInput.classList.add("shake");
+              setTimeout(() => senhaInput.classList.remove("shake"), 400);
+
+              senhaInput.value = "";
+
+              Swal.fire({
+                icon: "error",
+                title: "Algo deu errado",
+                text: resultado.erro,
+                confirmButtonColor: "#e25388",
+                background: "#fff",
+                color: "#333",
+                backdrop: `rgba(0,0,0,0.4)`
+              });
+
+              return;
+            }
+
+            // SUCESSO
+            Swal.fire({
+              icon: "success",
+              title: "Login efetuado!",
+              text: "Redirecionando...",
+              timer: 1200,
+              showConfirmButton: false,
+              background: "#fff",
+              color: "#333"
+            });
+
+            setTimeout(() => {
+              window.location.href = "/admin";
+            }, 1200);
+
+          });
+        });
+      </script>
