@@ -7,13 +7,16 @@ const { Post } = require("./models/postModel");
 const { User } = require("./models/userModel");
 const { Comment } = require("./models/commentModel");
 
-const app = express();
-const port = process.env.PORT || 3000;
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 // Routes imports
 const authRoutes = require('./routes/authRoutes');
 const postRoutes = require('./routes/postRoutes');
 const mainRoutes = require('./routes/mainRoutes');
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 // Configurações básicas
 app.set("view engine", "ejs");
@@ -29,7 +32,6 @@ app.use(session({
 
 // Global Middlewares
 app.use((req, res, next) => {
-  console.log(`[REQUEST] ${req.method} ${req.url}`);
   res.locals.user = req.session.user || null;
   res.locals.isAdmin = req.session.user && req.session.user.isAdmin; // Ensure boolean
   res.locals.titulo = "Florir";
@@ -51,18 +53,44 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// Security Middleware
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://kit.fontawesome.com", "https://cdn.jsdelivr.net", "https://unpkg.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://unpkg.com", "https://maxcdn.bootstrapcdn.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://ka-f.fontawesome.com", "https://maxcdn.bootstrapcdn.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      connectSrc: ["'self'", "https://ka-f.fontawesome.com", "http://localhost:3000", "ws://localhost:3000", "https://unpkg.com", "https://overpass.kumi.systems"]
+    },
+  },
+}));
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000 // limit each IP to 1000 requests per windowMs
+});
+app.use(limiter);
+
+// ...
+
 // Database Sync
 (async () => {
   try {
-    await sequelize.sync({ alter: true });
-    await Comment.sync({ alter: true });
+    await sequelize.sync();
+    await Comment.sync();
 
     // Create admin if not exists
     const adminExists = await User.findOne({ where: { username: "admin" } });
     if (!adminExists) {
+      const adminPassword = process.env.ADMIN_PASSWORD || "1234";
+      if (adminPassword === "1234") {
+        console.warn("⚠️  AVISO DE SEGURANÇA: Usando senha padrão '1234' para admin. Configure ADMIN_PASSWORD no .env.");
+      }
       await User.create({
         username: "admin",
-        password: "1234",
+        password: adminPassword,
         isAdmin: true
       });
       console.log("Usuário admin criado automaticamente.");

@@ -506,3 +506,10 @@ footer a:hover {
 .btn-delete:hover {
   opacity: 0.8;
 }
+/* -------- Posts Container (See Also) -------- */
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem; /* Increased spacing */
+  margin-top: 2rem;
+}

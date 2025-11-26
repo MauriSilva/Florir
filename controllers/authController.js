@@ -58,7 +58,7 @@ exports.register = async (req, res) => {
             isAdmin: false
         });
 
-        console.log("Novo usuário criado:", username);
+
 
         res.redirect('/login');
 
@@ -95,7 +95,7 @@ exports.createUser = async (req, res) => {
             isAdmin: isAdmin === 'on'
         });
 
-        console.log(`👤 Novo usuário criado por admin: ${username}`);
+
         res.redirect('/admin/users/create'); // Reload page to show new user
 
     } catch (err) {
@@ -139,7 +139,7 @@ exports.updateUser = async (req, res) => {
         }
 
         await user.save();
-        console.log(`👤 Usuário atualizado: ${username}`);
+
         res.redirect('/admin/users/create');
 
     } catch (err) {
@@ -153,7 +153,7 @@ exports.deleteUser = async (req, res) => {
     const { id } = req.params;
     try {
         await User.destroy({ where: { id } });
-        console.log(`🗑️ Usuário excluído: ID ${id}`);
+
         res.redirect('/admin/users/create');
     } catch (err) {
         console.error("Erro ao excluir usuário:", err);

@@ -1,23 +1,12 @@
 <%- include("partials/layout") %>
-<%- include("partials/header") %>
+  <%- include("partials/header") %>
 
-<main class="glass-container">
-  <article>
-    <h1 style="text-align: center; padding: 20px;"><%= post.title %></h1>
-    <% if (post.image) { %>
-      <img class="post-image" src="<%= post.image %>" alt="<%= post.title %>">
-    <% } %>
-    <div class="post-content">
-      <%- htmlContent %>
-    </div>
-  </article>
+    <main class="container" style="margin-top: 2rem; margin-bottom: 2rem;">
 
+      <section class="leia-mais" style="margin-top: 3rem;">
+        <h3 style="text-align: center; margin-bottom: 2rem;">Veja também</h3>
+        <%- include("partials/posts", { posts: postsRecentes }) %>
+      </section>
+    </main>
 
-
-<section class="leia-mais">
-  <h3 style="text-align: center;">Veja também</h3>
-  <%- include("partials/posts", { posts: postsRecentes }) %>
-</section>
-</main>
-
-<%- include("partials/footer") %>
+    <%- include("partials/footer") %>

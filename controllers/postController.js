@@ -30,10 +30,26 @@ exports.show = async (req, res) => {
 
         const htmlContent = marked.parse(post.content);
 
+        // Filter out current post from postsRecentes
+        const relatedPosts = res.locals.postsRecentes ? res.locals.postsRecentes.filter(p => p.id !== post.id) : [];
+
+        // Check if image exists locally to prevent 404 in browser console
+        const fs = require('fs');
+        const path = require('path');
+        let displayImage = post.image;
+
+        if (post.image && post.image.startsWith('/')) {
+            const localPath = path.join(__dirname, '../public', post.image);
+            if (!fs.existsSync(localPath)) {
+                displayImage = '/img/florir-semdesc.png';
+            }
+        }
+
         res.render('artigo', {
-            post,
+            post: { ...post.toJSON(), image: displayImage }, // Override image for view
             htmlContent,
-            titulo: post.title
+            titulo: post.title,
+            postsRecentes: relatedPosts
         });
 
     } catch (err) {
@@ -89,12 +105,12 @@ exports.createPage = (req, res) => {
 };
 
 exports.create = async (req, res) => {
-    console.log("📝 Tentando criar post. Dados recebidos:", req.body);
+
     const { title, summary, content, category, image } = req.body;
 
     try {
         if (!title || !summary || !content) {
-            console.log("❌ Campos obrigatórios faltando.");
+
             return res.status(400).send("Título, resumo e conteúdo são obrigatórios.");
         }
 
@@ -114,7 +130,7 @@ exports.create = async (req, res) => {
             image: image || '/default.jpg'
         });
 
-        console.log("✅ Post criado com sucesso:", newPost.id);
+
         res.redirect("/admin");
     } catch (err) {
         console.error("❌ Erro ao criar post:", err);
@@ -152,8 +168,8 @@ exports.update = async (req, res) => {
             category
         });
 
-        console.log('✅ Post atualizado:', post.title);
-        res.redirect('/');
+
+        res.redirect('/admin');
     } catch (err) {
         console.error('Erro ao atualizar post:', err);
         res.status(500).send('Erro ao atualizar post');
@@ -172,7 +188,7 @@ exports.delete = async (req, res) => {
 
         await post.destroy();
 
-        console.log("🗑️ Post deletado:", post.title);
+
         res.redirect('/admin');
     } catch (err) {
         console.error("Erro ao deletar post:", err);

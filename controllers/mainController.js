@@ -6,7 +6,7 @@ exports.sobre = (req, res) => {
 };
 
 exports.contatoPage = (req, res) => {
-    console.log("Acessando página de contato...");
+
     res.render("contato", { titulo: "Fale Conosco - Florir" });
 };
 
@@ -37,7 +37,7 @@ exports.contato = async (req, res) => {
       `
         });
 
-        console.log("📨 E-mail enviado com sucesso!");
+
         res.redirect("/contato?enviado=1");
 
     } catch (error) {
@@ -79,7 +79,7 @@ exports.postComunidade = async (req, res) => {
 
     try {
         const novoComentario = await Comment.create({ name, message, approved: false });
-        console.log("✅ Comentário salvo no banco:", novoComentario.toJSON());
+
     } catch (err) {
         console.error("❌ Erro ao salvar comentário:", err);
     }
