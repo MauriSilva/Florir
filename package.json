@@ -1,4 +1,11 @@
 {
+  "name": "Florir",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "ejs": "^3.1.10",
@@ -10,11 +17,6 @@
     "sqlite3": "^5.1.6"
   },
   "engines": {
-  "node": "18.x"
-},
-
-  "scripts": {
-    "start": "node index.js",
-    "postinstall": "npm rebuild sqlite3 --build-from-source"
+    "node": ">=20"
   }
 }
